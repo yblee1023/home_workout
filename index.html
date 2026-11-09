@@ -820,6 +820,7 @@ const HELP={
   shoot:['촬영일','<p>촬영일을 입력하면 상단에 D-day가 표시되고, 촬영 2주 전부터 준비 체크가 오늘 탭에 나타나요.</p><p class="muted" style="font-size:13px">비워둬도 앱은 그대로 쓸 수 있어요.</p>'],
   adj:['강도·주차 조정','<ul class="cues"><li><b>동작 단계 초기화</b>: 운동 중 “쉬웠어요”나 “더 어려운 동작”으로 올라간 단계를 처음 상태로 되돌려요. 운동 기록은 지워지지 않아요</li><li><b>이번 주를 1주차로</b>: 4주 사이클(반복↑ → 세트↑ → 회복)을 이번 주부터 다시 시작해요</li></ul>'],
   backup:['백업 · 옮기기','<p>기록은 이 기기의 브라우저에만 저장돼요. 폰을 바꾸거나 브라우저 데이터를 지우기 전에 “백업 복사”로 데이터를 복사해 메모 앱 등에 보관하세요.</p><p>새 기기에서는 이 칸에 붙여넣고 “붙여넣은 데이터로 복원”을 누르면 돼요.</p>'],
+  time:['1회 운동 시간','<p>한 번에 쓸 수 있는 시간에 맞춰 세션이 줄어들어요. 시간이 짧을수록 아래 순서로 줄여요.</p><ol class="cues" style="padding-left:20px"><li>마무리 인터벌(피니셔)</li><li>쿨다운 일부</li><li>메인 동작의 세트 수</li><li>워밍업 일부, 보조 동작</li></ol><p class="muted" style="font-size:13px">시간 안에 끝나도록 쉬는 시간과 동작 수를 계산한 대략의 값이에요. 메인 운동 3가지는 항상 남아요. 촬영이 다가오거나 몸이 힘들면 평소보다 더 줄여도 괜찮아요.</p>'],
   eq:['집 환경','<p>집에 있는 것만 켜 주세요. 꺼져 있는 도구가 필요한 동작은 도구 없이 하는 비슷한 동작으로 자동으로 바뀌어요.</p><ul class="cues"><li>의자·소파: 바퀴가 없고 무거워서 밀리지 않을 때만</li><li>튼튼한 식탁: 체중을 실어도 움직이지 않을 때만</li><li>벽·문틀: 지지하거나 기댈 수 있는 벽</li><li>계단·낮은 단: 미끄럽지 않고 옆에 잡을 곳이 있을 때만</li><li>점프 가능: 무릎·발목·허리가 괜찮고 층간 소음 걱정이 없을 때만</li></ul><p class="muted" style="font-size:13px">가이드 탭에서 각 동작의 대체 동작도 볼 수 있어요.</p>'],
   health:['시작 전에 확인해 주세요','<ul class="cues"><li>지금 허리·무릎·어깨·손목에 통증이 있어요</li><li>심장·혈압 질환을 진단받았거나, 운동 중 가슴 통증·실신을 겪은 적이 있어요</li><li>임신 중이거나 수술·재활 중이에요</li></ul><p>하나라도 해당하면 시작 전에 의사나 물리치료사와 먼저 상담하세요.</p><p class="muted" style="font-size:13px">이 앱은 일반적인 운동 정보를 제공하며 의학적 진단이나 치료를 대신하지 않아요. 운동 중 날카로운 통증, 저림, 어지러움, 가슴 통증이 있으면 바로 멈추세요.</p>'],
   confadj:['동작 단계를 초기화할까요?','<p>“쉬웠어요”나 “더 어려운 동작”으로 올라간 단계가 모두 처음 상태로 돌아가요. 운동 기록과 몸 기록은 그대로예요.</p>','초기화'],
@@ -933,7 +934,7 @@ const ORDER=[1,2,3,4,5,6,0];
 const md=d=>(d.getMonth()+1)+'/'+d.getDate();
 
 const KEY='wedfit.v1';
-const DEF={profile:{sex:'m',level:0,days:[1,3,5],shoot:'',start:'',eq:{chair:1,table:0,wall:1,step:0,jump:0}},adj:{},over:{},logs:[],body:[],setup:false,seen:false};
+const DEF={profile:{sex:'m',level:0,days:[1,3,5],time:60,shoot:'',start:'',eq:{chair:1,table:0,wall:1,step:0,jump:0}},adj:{},over:{},logs:[],body:[],setup:false,seen:false};
 function load(){
   let s=JSON.parse(JSON.stringify(DEF));
   try{const j=localStorage.getItem(KEY);if(j){const o=JSON.parse(j);s=Object.assign(s,o);s.profile=Object.assign(JSON.parse(JSON.stringify(DEF.profile)),o.profile||{});s.profile.eq=Object.assign({},DEF.profile.eq,(o.profile||{}).eq||{});}}catch(e){}
@@ -998,7 +999,24 @@ function build(ses,date){
     const keep=main.filter(i=>!['하체','컨디셔닝'].includes(LIB[i.p].g));
     mainI=keep.length?keep:main.map(i=>Object.assign({},i,{sets:Math.max(1,i.sets-1)}));
   }
-  return {ses,date,items:[].concat(warm,mainI,fin,cool),main:mainI.concat(fin)};
+  const q=fitTime(warm,mainI,fin,cool);
+  return {ses,date,items:[].concat(q.w,q.m,q.f,q.c),main:q.m.concat(q.f)};
+}
+/* 1회 운동 시간(30·45·60분)에 맞춰 줄이기: 피니셔 → 쿨다운 → 세트 → 워밍업 → 보조 동작 순서. 메인 3개는 항상 남겨요 */
+function fitTime(w,m,f,c){
+  const T=Number(S.profile.time)||60,lim=T+2;
+  let W=w.slice(),M=m.map(i=>Object.assign({},i)),F=f.slice(),C=c.slice();
+  const tot=()=>estMin([].concat(W,M,F,C));
+  if(tot()<=lim)return {w:W,m:M,f:F,c:C};
+  F=[];
+  if(tot()>lim&&C.length>2)C=C.slice(0,2);
+  for(let pass=0;pass<3;pass++)for(let i=M.length-1;i>=0&&tot()>lim;i--){if(M[i].sets>2)M[i].sets-=1;}
+  if(tot()>lim&&W.length>4)W=W.slice(0,4);
+  while(tot()>lim&&M.length>3)M.pop();
+  if(tot()>lim&&W.length>3)W=W.slice(0,3);
+  for(let i=M.length-1;i>=0&&tot()>lim;i--){if(M[i].sets>1&&M[i].sets>2)M[i].sets-=1;}
+  if(tot()>lim&&C.length>1)C=C.slice(0,1);
+  return {w:W,m:M,f:F,c:C};
 }
 const unit=p=>p==='hiit'||p==='mc'?'라운드':'세트';
 const exOf=it=>lvOf(it.p,it.idx);
@@ -1055,6 +1073,7 @@ function profileForm(){
    '<div class="f">'+hd('성별','sex')+seg('sex',[['m','남성'],['f','여성']])+'</div>'+
    '<div class="f">'+hd('운동 경험','level')+seg('level',[[0,'입문'],[1,'중급']])+'</div>'+
    '<div class="f">'+hd('운동 요일 (3~5일)','days')+'<div class="chips days">'+ORDER.map(d=>'<button class="chip" data-a="day" data-v="'+d+'" aria-pressed="'+p.days.includes(d)+'">'+WD[d]+'</button>').join('')+'</div>'+(consecDays()?'<p class="muted" style="font-size:12px;color:var(--hot-soft-ink)">연속으로 운동하면 회복이 부족할 수 있어요. 월·수·금처럼 하루씩 띄우면 좋아요.</p>':'')+'</div>'+
+   '<div class="f">'+hd('1회 운동 시간','time')+seg('time',[[30,'30분'],[45,'45분'],[60,'60분']])+'</div>'+
    '<div class="f">'+hd('집 환경 (켜진 것만 사용)','eq')+'<div class="chips">'+EQ.map(e=>'<button class="chip" data-a="eq" data-v="'+e[0]+'" aria-pressed="'+eqHas(e[0])+'">'+e[1]+'</button>').join('')+'</div></div>'+
    '<div class="f"><div class="row sb"><label for="shoot">촬영일 (선택)</label><button class="ib" data-a="info" data-v="shoot" aria-label="촬영일 설명">?</button></div><input type="date" id="shoot" value="'+esc(p.shoot)+'"></div></div>';
 }
@@ -1409,7 +1428,7 @@ function vMe(){
 const A={
   tab(el){if(location.hash==='#'+el.dataset.v){window.scrollTo(0,0);}else location.hash=el.dataset.v;},
   eq(el){const k=el.dataset.v;S.profile.eq=S.profile.eq||{};S.profile.eq[k]=S.profile.eq[k]?0:1;save();render();toast(EQN[k]+(S.profile.eq[k]?' 사용':' 사용 안 함'));},
-  set(el){const k=el.dataset.k;S.profile[k]=k==='level'?Number(el.dataset.v):el.dataset.v;save();render();},
+  set(el){const k=el.dataset.k;S.profile[k]=(k==='level'||k==='time')?Number(el.dataset.v):el.dataset.v;save();render();},
   day(el){
     const d=Number(el.dataset.v),a=S.profile.days,i=a.indexOf(d);
     if(i>=0){if(a.length<=3){toast('운동 요일은 최소 3일이에요');return;}a.splice(i,1);}
