@@ -15,7 +15,7 @@
   --bg:#f5f5f7; --surface:#ffffff; --surface2:#ebebf0; --ink:#1d1d1f; --muted:#6e6e73; --line:#d2d2d7;
   --accent:#0071e3; --accent-ink:#ffffff; --accent-soft:#e8f1fc; --link:#0066cc;
   --blush:#e8f1fc; --blush-ink:#0066cc;
-  --ok:#1d7a34; --warn:#9a5b0b; --bad:#d70015;
+  --ok:#1d7a34; --ok-soft:#e3f3e6; --warn:#9a5b0b; --bad:#d70015;
   --hot:#0071e3; --hot-ink:#ffffff; --hot-soft:#e8f1fc; --hot-soft-ink:#0066cc;
   --f-body:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif;
   --f-num:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif;
@@ -24,14 +24,14 @@
   :root:not([data-theme="light"]){
     --bg:#000000; --surface:#1c1c1e; --surface2:#2c2c2e; --ink:#f5f5f7; --muted:#a1a1a6; --line:#38383a;
     --accent:#0071e3; --accent-ink:#ffffff; --accent-soft:#0a2540; --link:#2997ff;
-    --blush:#0a2540; --blush-ink:#2997ff; --ok:#30d158; --warn:#ffd60a; --bad:#ff453a; color-scheme:dark;
+    --blush:#0a2540; --blush-ink:#2997ff; --ok:#30d158; --ok-soft:#0f2a17; --warn:#ffd60a; --bad:#ff453a; color-scheme:dark;
     --hot:#2997ff; --hot-ink:#000000; --hot-soft:#0a2540; --hot-soft-ink:#2997ff;
   }
 }
 :root[data-theme="dark"]{
   --bg:#000000; --surface:#1c1c1e; --surface2:#2c2c2e; --ink:#f5f5f7; --muted:#a1a1a6; --line:#38383a;
     --accent:#0071e3; --accent-ink:#ffffff; --accent-soft:#0a2540; --link:#2997ff;
-    --blush:#0a2540; --blush-ink:#2997ff; --ok:#30d158; --warn:#ffd60a; --bad:#ff453a; color-scheme:dark;
+    --blush:#0a2540; --blush-ink:#2997ff; --ok:#30d158; --ok-soft:#0f2a17; --warn:#ffd60a; --bad:#ff453a; color-scheme:dark;
     --hot:#2997ff; --hot-ink:#000000; --hot-soft:#0a2540; --hot-soft-ink:#2997ff;
 }
 *{box-sizing:border-box}
@@ -68,10 +68,10 @@ h3{font-size:15px;font-weight:700}
 .btn.sm{padding:8px 12px;min-height:44px;font-size:13px}
 .btn[disabled]{opacity:.45}
 .chips{display:flex;gap:8px;flex-wrap:wrap}
-.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 14px;min-height:40px;font-weight:500}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 14px;min-height:44px;font-weight:500}
 .chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:700}
 .seg{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;background:var(--surface2);border-radius:12px;padding:3px;gap:3px}
-.seg button{border:0;background:transparent;border-radius:9px;padding:9px 6px;min-height:40px;font-weight:500}
+.seg button{border:0;background:transparent;border-radius:9px;padding:9px 6px;min-height:44px;font-weight:500}
 .seg button[aria-pressed="true"]{background:var(--surface);font-weight:700;box-shadow:0 1px 2px rgba(0,0,0,.12)}
 .f{display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--muted);min-width:0}
 input[type=number],input[type=date],input[type=search],textarea{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:10px 12px;min-height:44px;width:100%;color:var(--ink)}
@@ -122,7 +122,7 @@ button.tag[aria-pressed="true"]{outline:2px solid var(--ink);outline-offset:1px}
 .stat span{font-size:12px;color:var(--muted)}
 .heat{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
 .heat i{aspect-ratio:1;border-radius:6px;background:var(--surface2);display:block}
-.heat i.d{background:var(--accent)}
+.heat i.d{background:var(--ok)}
 .heat i.p{background:var(--accent-soft)}
 .heat i.t{outline:2px solid var(--ink);outline-offset:1px}
 .heat small{font-size:11px;color:var(--muted);text-align:center}
@@ -169,6 +169,17 @@ details.gx[open] summary::after{content:"–"}
 .sheet,.cues,.lv p,.muted,.card,.pl{word-break:keep-all;overflow-wrap:break-word}
 .sheet{scroll-padding-top:0}
 .sheet>.row:first-child{position:sticky;top:-18px;background:var(--surface);padding:4px 0;z-index:1}
+.today-card{gap:16px;padding:24px 20px}
+.hero-t{font-size:30px;line-height:1.15;font-weight:700;letter-spacing:-.02em;margin-top:4px}
+.list.ex li{align-items:center;justify-content:flex-start;padding:8px 0}
+.list.ex .t{flex:1}
+.thumb{width:56px;height:34px;flex:none;border-radius:8px;background:var(--surface2);display:block}
+.plfig{display:block;width:100%;max-width:320px;max-height:150px;margin:0 auto;background:var(--surface);border-radius:18px}
+.tag.ok{background:var(--ok-soft);color:var(--ok)}
+/* 누름 반응: 짧고 작게. 움직임 줄이기에서는 끔 */
+.btn,.chip,.day,.seg button,.stepper button,.tabs button{transition:transform .12s cubic-bezier(.25,.1,.25,1),background-color .2s}
+.btn:active,.chip:active,.day:active,.seg button:active,.stepper button:active{transform:scale(.97)}
+@media (prefers-reduced-motion: reduce){.btn,.chip,.day,.seg button,.stepper button,.tabs button{transition:none}.btn:active,.chip:active,.day:active,.seg button:active,.stepper button:active{transform:none}}
 /* 시작 화면: 배경 그리드에 동작들이 차례로 나타나고, 가운데 로고와 시작 버튼 */
 .splash{position:fixed;inset:0;z-index:90;background:var(--bg);display:flex;flex-direction:column;align-items:center;gap:20px;
   padding:calc(12px + env(safe-area-inset-top,0px)) max(20px,env(safe-area-inset-right,0px)) calc(28px + env(safe-area-inset-bottom,0px)) max(20px,env(safe-area-inset-left,0px));
@@ -1077,7 +1088,7 @@ const TABS=[
   ['log','기록','<path d="M4 20h16M6 16v-5M11 16V6M16 16v-8"/>'],
   ['me','설정','<path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/>']
 ];
-const TITLES={today:null,week:'주간 계획',guide:'운동 가이드',log:'기록',me:'설정'};
+const TITLES={today:'오늘',week:'주간 계획',guide:'운동 가이드',log:'기록',me:'설정'};
 function route(){const h=(location.hash||'').slice(1);return TABS.some(t=>t[0]===h)?h:'today';}
 let lastR=null;
 function render(){
@@ -1116,8 +1127,14 @@ function consecDays(){
 function setupCard(){
   return '<section class="card soft"><div class="row sb"><h2>내 조건 맞추기</h2><button class="ib" data-a="info" data-v="setup" aria-label="설명">?</button></div>'+profileForm()+'<p class="muted" style="font-size:12px">건강이 걱정되면 시작 전에 의사와 상담하세요. <button class="ib" data-a="info" data-v="health" aria-label="시작 전 확인 사항">?</button></p><button class="btn primary" data-a="setup">이 설정으로 시작</button></section>';
 }
+/* 동작 정지 그림: 앱의 동작 애니메이션 중간 자세 */
+function poseThumb(p,i){
+  const an=LIB[p]&&!LIB[p].fixed?animFor(p,i):null;
+  if(!an)return '<span class="thumb" aria-hidden="true"></span>';
+  return '<svg class="thumb" viewBox="0 0 200 120" aria-hidden="true">'+frameSvg({an,mu:{p:[],s:[]},fit:fitOf(an),view:'s',ph:.5},.5)+'</svg>';
+}
 function listRows(items){
-  return '<ul class="list">'+items.map(i=>'<li><span class="t">'+esc(exOf(i).n)+'</span><span class="s">'+i.sets+' × '+tgtText(i)+'</span></li>').join('')+'</ul>';
+  return '<ul class="list ex">'+items.map(i=>'<li>'+poseThumb(i.p,i.idx)+'<span class="t">'+esc(exOf(i).n)+'</span><span class="s">'+i.sets+' × '+tgtText(i)+'</span></li>').join('')+'</ul>';
 }
 function vToday(){
   const now=new Date(),k=ymd(now),pl=planFor(now),c=cw(now);
@@ -1126,15 +1143,14 @@ function vToday(){
   const done=doneOn(k);
   if(pl.ses){
     const b=build(pl.ses,now),mn=estMin(b.items);
-    h+='<section class="card"><div class="row sb"><span class="tag">'+CYCLE[c]+'</span><span class="muted num" style="font-size:16px">약 '+mn+'분</span></div>'+
-      '<div><h2>'+esc(pl.ses.n)+'</h2><p class="muted" style="font-size:13px">'+esc(pl.ses.tag)+(pl.moved?' · 옮긴 일정':'')+'</p></div>'+
+    h+='<section class="card today-card"><div><p class="eyebrow">'+(now.getMonth()+1)+'월 '+now.getDate()+'일 '+WD[now.getDay()]+'요일 · '+CYCLE[c]+'</p><h2 class="hero-t">'+esc(pl.ses.n)+'</h2><p class="muted" style="font-size:15px">'+esc(pl.ses.tag)+(pl.moved?' · 옮긴 일정':'')+' · <span class="num">약 '+mn+'분</span></p></div>'+
       listRows(b.main)+
       '<p class="muted" style="font-size:12px">워밍업 약 4분 · 쿨다운 약 3분 포함 · '+rampNote(now)+CHINT[c]+'</p>'+
-      (done.length?'<div class="row sb" style="background:var(--accent-soft);border-radius:10px;padding:10px 12px"><b style="color:var(--accent)">오늘 완료</b><span class="muted" style="font-size:13px">'+Math.round(done[done.length-1].dur/60)+'분 · '+done[done.length-1].sets.length+'세트</span></div>':'')+
+      (done.length?'<div class="row sb" style="background:var(--ok-soft);border-radius:12px;padding:10px 12px"><b style="color:var(--ok)">✓ 오늘 완료</b><span class="muted" style="font-size:13px">'+Math.round(done[done.length-1].dur/60)+'분 · '+done[done.length-1].sets.length+'세트</span></div>':'')+
       '<button class="btn primary big" data-a="start">'+(done.length?'한 번 더 하기':'운동 시작')+'</button>'+
       '<button class="btn ghost" data-a="sheet" data-v="'+k+'">오늘 일정 바꾸기</button></section>';
   }else{
-    h+='<section class="card"><div><h2>오늘은 회복일</h2><p class="muted" style="font-size:13px">근육은 쉬는 동안 자라요. 가볍게 몸만 풀어주세요.</p></div>'+
+    h+='<section class="card today-card"><div><p class="eyebrow">'+(now.getMonth()+1)+'월 '+now.getDate()+'일 '+WD[now.getDay()]+'요일</p><h2 class="hero-t">오늘은 회복일</h2><p class="muted" style="font-size:13px">근육은 쉬는 동안 자라요. 가볍게 몸만 풀어주세요.</p></div>'+
       '<ul class="list"><li><span class="t">가벼운 걷기</span><span class="s">30분</span></li><li><span class="t">스트레칭 · 차일드 포즈</span><span class="s">10분</span></li><li><span class="t">수면 목표</span><span class="s">7시간+</span></li></ul>'+
       (done.length?'<div class="tag" style="align-self:flex-start">오늘 운동 기록 있음</div>':'')+
       '<button class="btn" data-a="sheet" data-v="'+k+'">그래도 운동할래요</button></section>';
@@ -1167,7 +1183,7 @@ function vWeek(){
   h+='<section class="card" style="gap:0">'+days.map(d=>{
     const p=planFor(d),st=dayState(d),ds=ymd(d);
     const name=p.ses?esc(p.ses.n):'휴식 · 걷기',sub=p.ses?esc(p.ses.tag)+' · 약 '+estMin(build(p.ses,d).items)+'분':'가벼운 걷기와 스트레칭';
-    const badge=st==='done'?'<span class="tag">완료</span>':st==='miss'?'<span class="tag w">미완료</span>':'';
+    const badge=st==='done'?'<span class="tag ok">완료</span>':st==='miss'?'<span class="tag w">미완료</span>':'';
     return '<button data-a="sheet" data-v="'+ds+'" style="display:flex;gap:12px;align-items:center;text-align:left;background:none;border:0;border-top:1px solid var(--line);padding:12px 0;width:100%;min-height:60px'+(ds===k?';font-weight:700':'')+'">'+
       '<span style="width:44px;text-align:center;flex:none"><span class="muted" style="font-size:11px;display:block">'+WD[d.getDay()]+'</span><span class="num" style="font-size:22px;line-height:1">'+d.getDate()+'</span></span>'+
       '<span class="grow"><span style="display:block">'+name+(p.moved?' <span class="muted" style="font-size:12px">· 변경됨</span>':'')+'</span><span class="muted" style="font-size:12px;font-weight:400">'+sub+'</span></span>'+badge+'</button>';
@@ -1275,11 +1291,23 @@ function draw(){
       tgtBlock='<div style="text-align:center"><p class="muted" style="font-size:13px">목표 '+tgtText(it)+'</p><div class="stepper"><button data-a="rep" data-v="-1" aria-label="횟수 줄이기">−</button><span class="big-n" id="rp">'+P.reps+'</span><button data-a="rep" data-v="1" aria-label="횟수 늘리기">+</button></div><p class="muted" style="font-size:13px">실제로 한 횟수를 맞춰주세요</p></div>';
     }
     const main=it.k==='t'?(P.run?'<button class="btn big" data-a="wdone">지금 끝내기</button>':'<button class="btn primary big" data-a="tstart">시작</button>'):'<button class="btn primary big" data-a="wdone">세트 완료</button>';
-    h='<div class="pl">'+top(it.blk)+'<div class="pl-main"><div><p class="eyebrow">'+label+'</p><h1>'+esc(ex.n)+'</h1><div class="chips" style="gap:6px;margin-top:6px">'+muChips(it.p,it.idx)+(ex.alt?'<span class="tag g">도구 없이</span>':'')+'</div></div>'+tgtBlock+
+    h='<div class="pl">'+top(it.blk)+'<div class="pl-main"><div><p class="eyebrow">'+label+'</p><h1>'+esc(ex.n)+'</h1><div class="chips" style="gap:6px;margin-top:6px">'+muChips(it.p,it.idx)+(ex.alt?'<span class="tag g">도구 없이</span>':'')+'</div></div>'+(!animFor(it.p,it.idx)?'':'<svg id="plfig" class="plfig" viewBox="0 0 200 120" data-p="'+it.p+'" data-i="'+it.idx+'" aria-hidden="true"><g></g></svg>')+tgtBlock+
       '<ul class="cues">'+ex.c.map(c=>'<li>'+esc(c)+'</li>').join('')+'</ul>'+(ex.x?'<p class="muted" style="font-size:13px">자주 하는 실수 · '+esc(ex.x)+'</p>':'')+(toolNote(it.p,it.idx)?'<p class="muted" style="font-size:12px">안전 · '+esc(toolNote(it.p,it.idx))+'</p>':'')+'<div>'+moBtn(it.p,it.idx,'움직임 · 자극 부위 보기')+'</div></div>'+
       '<div class="pl-foot">'+main+'<div class="row sb">'+(Q.fixed?'<span></span>':'<button class="btn sm" data-a="easy"'+(it.idx<=0?' disabled':'')+'>더 쉬운 동작</button><button class="btn sm" data-a="hard"'+(it.idx>=2?' disabled':'')+'>더 어려운 동작</button>')+'<button class="btn sm ghost" data-a="pmore">통증·건너뛰기</button></div></div></div>';
   }
   L.innerHTML=h;
+  if(!PF)PF=requestAnimationFrame(plFig);
+}
+/* 플레이어 동작 그림 루프: #plfig가 화면에 있을 때만 돈다 */
+let PF=0;
+function plFig(now){
+  const v=document.getElementById('plfig');
+  if(!v){PF=0;return;}
+  if(!v.__m){const an=animFor(v.dataset.p,+v.dataset.i);v.__m={an,mu:{p:[],s:[]},fit:fitOf(an),view:'s',ph:.5};}
+  const M=v.__m,still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  M.ph=still?.5:(now%M.an.dur)/M.an.dur;
+  v.firstChild.innerHTML=frameSvg(M,.5);
+  PF=still?0:requestAnimationFrame(plFig);
 }
 
 /* 플레이어 액션 */
