@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="홈트 플래너">
+  <!-- 플랭크: 어깨에서 갈라지는 두 획(몸·팔)이 'ㅅ'을 이루고, 점 하나가 머리 -->
+  <rect width="512" height="512" rx="115" fill="#0071e3"/>
+  <g fill="none" stroke="#fff" stroke-width="44" stroke-linecap="round">
+    <path d="M196 206 L404 356"/>
+    <path d="M196 206 L168 356"/>
+  </g>
+  <circle cx="140" cy="168" r="32" fill="#fff"/>
+</svg>
