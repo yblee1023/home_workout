@@ -170,20 +170,20 @@ details.gx[open] summary::after{content:"–"}
 .sheet{scroll-padding-top:0}
 .sheet>.row:first-child{position:sticky;top:-18px;background:var(--surface);padding:4px 0;z-index:1}
 /* 시작 화면: 배경 그리드에 동작들이 차례로 나타나고, 가운데 로고와 시작 버튼 */
-.splash{position:fixed;inset:0;z-index:90;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
-  padding:0 max(20px,env(safe-area-inset-right,0px)) calc(32px + env(safe-area-inset-bottom,0px)) max(20px,env(safe-area-inset-left,0px));
+.splash{position:fixed;inset:0;z-index:90;background:var(--bg);display:flex;flex-direction:column;align-items:center;gap:20px;
+  padding:calc(12px + env(safe-area-inset-top,0px)) max(20px,env(safe-area-inset-right,0px)) calc(28px + env(safe-area-inset-bottom,0px)) max(20px,env(safe-area-inset-left,0px));
   transition:opacity .45s cubic-bezier(.25,.1,.25,1),transform .45s cubic-bezier(.25,.1,.25,1)}
 .splash.out{opacity:0;transform:scale(1.04);pointer-events:none}
-.sp-grid{position:absolute;inset:0;display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:minmax(0,1fr);gap:4px;padding:calc(8px + env(safe-area-inset-top,0px)) 8px 8px;
-  -webkit-mask-image:radial-gradient(ellipse 70% 42% at 50% 46%,transparent 30%,#000 85%);mask-image:radial-gradient(ellipse 70% 42% at 50% 46%,transparent 30%,#000 85%)}
-.sp-grid svg{width:100%;height:100%;opacity:0;transform:translateY(8px);transition:opacity .6s ease,transform .6s ease}
-.sp-grid svg.on{opacity:.42;transform:none}
-.sp-mid{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;pointer-events:none}
-.sp-mid img{width:96px;height:96px;border-radius:22px}
-.sp-mid h1{font-size:34px}
+.sp-grid{flex:1;min-height:0;width:100%;max-width:480px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(4,minmax(0,1fr));gap:4px 8px;
+  -webkit-mask-image:linear-gradient(#000 90%,transparent);mask-image:linear-gradient(#000 90%,transparent)}
+.sp-grid svg{display:block;width:100%;height:100%;min-width:0;min-height:0;opacity:0;transform:translateY(8px);transition:opacity .6s ease,transform .6s ease}
+.sp-grid svg.on{opacity:.5;transform:none}
+.sp-mid{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
+.sp-mid img{width:72px;height:72px;border-radius:17px}
+.sp-mid h1{font-size:30px}
 .sp-mid p{color:var(--muted);font-size:17px}
-.sp-cap{min-height:20px;font-size:15px;color:var(--link);font-weight:500;transition:opacity .3s}
-.splash .btn{position:relative;width:100%;max-width:400px}
+.sp-cap{min-height:20px;font-size:15px;color:var(--link);font-weight:500}
+.splash .btn{width:100%;max-width:400px;flex:none}
 @media (prefers-reduced-motion: reduce){.splash,.sp-grid svg,.sp-cap{transition:none}}
 </style>
 </head>
@@ -1546,7 +1546,7 @@ render();
   function loop(now){
     M.forEach((m,i)=>{if(i>=shown)return;m.ph=reduce?.5:(((now-t0)/m.an.dur)+m.off)%1;gs[i].innerHTML=frameSvg(m,.5);});
     const c=Math.floor((now-t0)/2400)%SP.length;
-    if(c!==ci){ci=c;cap.textContent=SP[c][1];svgs.forEach((v,i)=>v.style.opacity=i===c?'.7':'');}
+    if(c!==ci){ci=c;cap.textContent=SP[c][1];svgs.forEach((v,i)=>v.style.opacity=i===c?'1':'');}
     if(!reduce)raf=requestAnimationFrame(loop);
   }
   // 로딩: 칸이 하나씩 나타난다
