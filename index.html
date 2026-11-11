@@ -6,6 +6,7 @@
 <meta name="theme-color" content="#f5f5f7" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <meta name="apple-mobile-web-app-title" content="홈트 플래너">
 <title>홈트 플래너</title>
@@ -17,8 +18,8 @@
   --blush:#e8f1fc; --blush-ink:#0066cc;
   --ok:#1d7a34; --ok-soft:#e3f3e6; --warn:#9a5b0b; --bad:#d70015;
   --hot:#0071e3; --hot-ink:#ffffff; --hot-soft:#e8f1fc; --hot-soft-ink:#0066cc;
-  --f-body:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif;
-  --f-num:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif;
+  --f-body:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo",system-ui,sans-serif;
+  --f-num:ui-rounded,"SF Pro Rounded","Pretendard Variable",Pretendard,-apple-system,system-ui,sans-serif;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
@@ -44,10 +45,10 @@ button{cursor:pointer}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .wrap{max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
 h1,h2,h3,p{margin:0}
-h1{font-size:34px;line-height:1.15;font-weight:700;letter-spacing:-.02em;text-wrap:balance}
-h2{font-size:22px;font-weight:600;letter-spacing:-.01em;text-wrap:balance}
+h1{font-size:34px;line-height:1.15;font-weight:700;letter-spacing:-.03em;text-wrap:balance}
+h2{font-size:22px;font-weight:700;letter-spacing:-.025em;text-wrap:balance}
 h3{font-size:15px;font-weight:700}
-.eyebrow{font-size:12px;letter-spacing:.06em;color:var(--muted);font-weight:500}
+.eyebrow{font-size:13px;letter-spacing:0;color:var(--muted);font-weight:600}
 .muted{color:var(--muted)}
 .num{font-family:var(--f-num);font-variant-numeric:tabular-nums}
 .top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:6px}
@@ -59,40 +60,41 @@ h3{font-size:15px;font-weight:700}
 .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .row.sb{justify-content:space-between}
 .grow{flex:1;min-width:0}
-.btn{border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 16px;font-weight:700;min-height:44px}
-.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);border-radius:980px;font-weight:600}
+.btn{border:0;background:var(--surface2);border-radius:980px;padding:11px 18px;font-weight:600;min-height:44px;letter-spacing:-.01em}
+.btn.primary{background:var(--accent);color:var(--accent-ink)}
 .btn.primary:hover{background:#0077ed}
 .btn.big{min-height:50px;font-size:17px;width:100%}
 .btn.ghost{background:transparent;border-color:transparent;color:var(--link);font-weight:500}
-.btn.danger{color:var(--bad);border-color:var(--bad)}
-.btn.sm{padding:8px 12px;min-height:44px;font-size:13px}
+.btn.danger{color:var(--bad);background:color-mix(in srgb,var(--bad) 12%,transparent)}
+.btn.sm{padding:8px 14px;min-height:44px;font-size:14px}
 .btn[disabled]{opacity:.45}
 .chips{display:flex;gap:8px;flex-wrap:wrap}
-.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 14px;min-height:44px;font-weight:500}
-.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:700}
-.seg{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;background:var(--surface2);border-radius:12px;padding:3px;gap:3px}
-.seg button{border:0;background:transparent;border-radius:9px;padding:9px 6px;min-height:44px;font-weight:500}
-.seg button[aria-pressed="true"]{background:var(--surface);font-weight:700;box-shadow:0 1px 2px rgba(0,0,0,.12)}
+.chip{border:0;background:var(--surface2);border-radius:999px;padding:7px 14px;min-height:44px;font-weight:500}
+.chip[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);font-weight:600}
+.seg{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;background:var(--surface2);border-radius:980px;padding:3px;gap:3px}
+.seg button{border:0;background:transparent;border-radius:980px;padding:9px 6px;min-height:44px;font-weight:500}
+.seg button[aria-pressed="true"]{background:var(--surface);font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,.1)}
 .f{display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--muted);min-width:0}
-input[type=number],input[type=date],input[type=search],textarea{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:10px 12px;min-height:44px;width:100%;color:var(--ink)}
+input[type=number],input[type=date],input[type=search],textarea{border:0;background:var(--surface2);border-radius:12px;padding:10px 12px;min-height:44px;width:100%;color:var(--ink)}
 input[type=date]{-webkit-appearance:none;appearance:none;display:block;inline-size:100%;max-inline-size:100%;min-width:0;text-align:left;line-height:1.2}
 input[type=date]::-webkit-date-and-time-value{text-align:left;min-width:0}
 textarea{min-height:96px;font-size:12px;font-family:ui-monospace,Menlo,monospace}
-.tabs{position:fixed;left:0;right:0;bottom:0;z-index:20;background:color-mix(in srgb,var(--surface) 82%,transparent);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-top:1px solid var(--line);
-  padding:6px max(10px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(10px,env(safe-area-inset-left,0px))}
-.tabs nav{max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);gap:2px}
-.tabs button{border:0;background:transparent;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 0;font-size:11px;color:var(--muted);border-radius:10px;font-weight:500;min-height:48px}
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:20;pointer-events:none;
+  padding:0 max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.tabs nav{pointer-events:auto;max-width:480px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);gap:2px;padding:5px;border-radius:980px;
+  background:color-mix(in srgb,var(--surface) 78%,transparent);-webkit-backdrop-filter:saturate(180%) blur(24px);backdrop-filter:saturate(180%) blur(24px);box-shadow:inset 0 0 0 .5px var(--line),0 8px 24px rgba(0,0,0,.08)}
+.tabs button{border:0;background:transparent;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 0;font-size:11px;color:var(--muted);border-radius:980px;font-weight:600;min-height:52px}
 .tabs button svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.tabs button[aria-current="page"]{color:var(--link);font-weight:600}
+.tabs button[aria-current="page"]{color:var(--link);background:var(--accent-soft)}
 .strip{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
-.day{border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:8px 0;text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px;min-width:0}
+.day{border:0;background:var(--surface2);border-radius:14px;padding:8px 0;text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px;min-width:0}
 .day small{font-size:11px;color:var(--muted)}
 .day b{font-family:var(--f-num);font-size:18px;line-height:1.1}
 .day i{width:8px;height:8px;border-radius:50%;background:var(--line);display:block;margin-top:2px}
 .day.plan i{background:var(--accent);opacity:.45}
 .day.done i{background:var(--ok);opacity:1}
 .day.miss i{background:var(--warn);opacity:1}
-.day.today{border-color:var(--accent);border-width:2px}
+.day.today{background:var(--surface);box-shadow:inset 0 0 0 2px var(--accent)}
 .list{display:flex;flex-direction:column;gap:0;margin:0;padding:0;list-style:none}
 .list li{display:flex;gap:10px;align-items:baseline;justify-content:space-between;padding:9px 0;border-top:1px solid var(--line)}
 .list li:first-child{border-top:0}
@@ -108,7 +110,7 @@ button.tag{border:0;font-family:inherit;min-height:32px;padding:4px 12px;cursor:
 button.tag.hot2{border:0}
 button.tag[aria-pressed="true"]{outline:2px solid var(--ink);outline-offset:1px}
 .gq{margin:10px 0 2px;-webkit-appearance:none;appearance:none}
-.ib{position:relative;width:28px;height:28px;min-height:28px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--muted);font-weight:700;font-size:13px;line-height:1;padding:0;flex:none}
+.ib{position:relative;width:28px;height:28px;min-height:28px;border-radius:50%;border:0;background:var(--surface2);color:var(--muted);font-weight:700;font-size:13px;line-height:1;padding:0;flex:none}
 .ib::after{content:"";position:absolute;inset:-8px}
 .mo{display:block;width:100%;border:1px solid var(--line);background:var(--surface2);border-radius:14px;padding:6px}
 .mo svg{display:block;max-height:240px}
@@ -174,7 +176,8 @@ details.gx[open] summary::after{content:"–"}
 .list.ex li{align-items:center;justify-content:flex-start;padding:8px 0}
 .list.ex .t{flex:1}
 .thumb{width:56px;height:34px;flex:none;border-radius:8px;background:var(--surface2);display:block}
-.plfig{display:block;width:100%;max-width:320px;max-height:150px;margin:0 auto;background:var(--surface);border-radius:18px}
+.plfig{display:block;width:100%;max-width:320px;height:150px;margin:0 auto;padding:12px;background:var(--surface);border-radius:18px;box-sizing:border-box}
+.plfig.sm{height:110px;max-width:240px;margin:6px auto 8px}
 .tag.ok{background:var(--ok-soft);color:var(--ok)}
 /* 누름 반응: 짧고 작게. 움직임 줄이기에서는 끔 */
 .btn,.chip,.day,.seg button,.stepper button,.tabs button{transition:transform .12s cubic-bezier(.25,.1,.25,1),background-color .2s}
@@ -1101,6 +1104,7 @@ function render(){
   $('#dd').innerHTML=dd;
   const v={today:vToday,week:vWeek,guide:vGuide,log:vLog,me:vMe}[r];
   $('#view').innerHTML=v();
+  fitThumbs();
   if(r===lastR)window.scrollTo(0,y);
   lastR=r;
 }
@@ -1131,7 +1135,7 @@ function setupCard(){
 function poseThumb(p,i){
   const an=LIB[p]&&!LIB[p].fixed?animFor(p,i):null;
   if(!an)return '<span class="thumb" aria-hidden="true"></span>';
-  return '<svg class="thumb" viewBox="0 0 200 120" aria-hidden="true">'+frameSvg({an,mu:{p:[],s:[]},fit:fitOf(an),view:'s',ph:.5},.5)+'</svg>';
+  return '<svg class="thumb" viewBox="0 0 200 120" aria-hidden="true"><g>'+frameSvg({an,mu:{p:[],s:[]},fit:fitOf(an),view:'s',ph:.5},.5)+'</g></svg>';
 }
 function listRows(items){
   return '<ul class="list ex">'+items.map(i=>'<li>'+poseThumb(i.p,i.idx)+'<span class="t">'+esc(exOf(i).n)+'</span><span class="s">'+i.sets+' × '+tgtText(i)+'</span></li>').join('')+'</ul>';
@@ -1277,7 +1281,7 @@ function draw(){
     const left=P.end?Math.max(0,Math.ceil((P.end-Date.now())/1000)):s.sec;
     h='<div class="pl">'+top('휴식')+'<div class="pl-main" style="text-align:center">'+
       '<p class="eyebrow">'+(pv.side==='왼쪽'?'반대쪽으로 바꿔요':'휴식')+'</p>'+ringHtml(left,P.total||s.sec,left)+
-      '<div><p class="muted" style="font-size:13px">다음</p><h2>'+esc(ne.n)+'</h2><p class="muted" style="font-size:13px">'+(nx.side?nx.side+' · ':'')+nx.s+'/'+nx.it.sets+' '+unit(nx.it.p)+' · '+tgtText(nx.it)+'</p>'+(LIB[nx.it.p].fixed?'':'<div style="margin-top:8px">'+moBtn(nx.it.p,nx.it.idx,'다음 동작 보기')+'</div>')+'</div>'+
+      '<div><p class="muted" style="font-size:13px">다음</p>'+(animFor(nx.it.p,nx.it.idx)?'<svg id="plfig" class="plfig sm" viewBox="0 0 200 120" data-p="'+nx.it.p+'" data-i="'+nx.it.idx+'" aria-hidden="true"><g></g></svg>':'')+'<h2>'+esc(ne.n)+'</h2><p class="muted" style="font-size:13px">'+(nx.side?nx.side+' · ':'')+nx.s+'/'+nx.it.sets+' '+unit(nx.it.p)+' · '+tgtText(nx.it)+'</p>'+(LIB[nx.it.p].fixed?'':'<div style="margin-top:8px">'+moBtn(nx.it.p,nx.it.idx,'다음 동작 보기')+'</div>')+'</div>'+
       (askFeel?'<div class="f" style="display:flex;flex-direction:column;gap:8px;align-items:center"><span class="muted" style="font-size:13px">방금 한 동작(“'+esc(exOf(pv.it).n)+'”)은 어땠나요?</span><div class="chips">'+[[1,'쉬웠어요'],[0,'적당해요'],[-1,'힘들었어요']].map(o=>'<button class="chip" data-a="feel" data-p="'+pv.it.p+'" data-v="'+o[0]+'" aria-pressed="'+(P.feel[pv.it.p]===o[0])+'">'+o[1]+'</button>').join('')+'</div></div>':'')+
       '</div><div class="pl-foot"><div class="row"><button class="btn grow" data-a="radd">+15초</button><button class="btn primary grow" data-a="rskip">바로 시작</button></div></div></div>';
   }else{
@@ -1298,12 +1302,22 @@ function draw(){
   L.innerHTML=h;
   if(!PF)PF=requestAnimationFrame(plFig);
 }
+/* 그림이 그려진 영역(bbox)에 viewBox를 맞춰 동작마다 크기를 고르게 */
+function fitBox(v,boxes){
+  let x0=1e9,y0=1e9,x1=-1e9,y1=-1e9;
+  boxes.forEach(b=>{if(!b.width&&!b.height)return;x0=Math.min(x0,b.x);y0=Math.min(y0,b.y);x1=Math.max(x1,b.x+b.width);y1=Math.max(y1,b.y+b.height);});
+  if(x0>x1)return;
+  const w=x1-x0,h=y1-y0,pd=Math.max(w,h)*.06;
+  v.setAttribute('viewBox',(x0-pd).toFixed(1)+' '+(y0-pd).toFixed(1)+' '+(w+2*pd).toFixed(1)+' '+(h+2*pd).toFixed(1));
+}
+function fitThumbs(){document.querySelectorAll('svg.thumb:not([data-fit])').forEach(v=>{v.dataset.fit=1;if(v.firstChild)fitBox(v,[v.firstChild.getBBox()]);});}
 /* 플레이어 동작 그림 루프: #plfig가 화면에 있을 때만 돈다 */
 let PF=0;
 function plFig(now){
   const v=document.getElementById('plfig');
   if(!v){PF=0;return;}
-  if(!v.__m){const an=animFor(v.dataset.p,+v.dataset.i);v.__m={an,mu:{p:[],s:[]},fit:fitOf(an),view:'s',ph:.5};}
+  if(!v.__m){const an=animFor(v.dataset.p,+v.dataset.i);v.__m={an,mu:{p:[],s:[]},fit:fitOf(an),view:'s',ph:.5};
+    const g=v.firstChild,bx=[];for(let k=0;k<12;k++){v.__m.ph=k/12;g.innerHTML=frameSvg(v.__m,.5);bx.push(g.getBBox());}fitBox(v,bx);}
   const M=v.__m,still=matchMedia('(prefers-reduced-motion: reduce)').matches;
   M.ph=still?.5:(now%M.an.dur)/M.an.dur;
   v.firstChild.innerHTML=frameSvg(M,.5);
