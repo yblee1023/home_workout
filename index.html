@@ -17,7 +17,7 @@
   --bg:#f7f1e8; --surface:#fefaef; --surface2:#eee6dc; --ink:#1d1d1f; --muted:#5a5958; --line:#e6ded3;
   --accent:#0071e3; --accent-ink:#ffffff; --accent-soft:#e8f1fc; --link:#0066cc;
   --blush:#e8f1fc; --blush-ink:#0066cc;
-  --ok:#1d7a34; --ok-soft:#e3f3e6; --seg-on:#fefaef; --accent-hover:#0077ed; --warn:#9a5b0b; --bad:#d70015;
+  --ok:#1d7a34; --ok-soft:#e3f3e6; --seg-on:#fefaef; --fig-near:#ebe3d6; --fig-far:#cbc1b2; --fig-ol:#4a453f; --fig-bg:var(--surface); --accent-hover:#0077ed; --warn:#9a5b0b; --bad:#d70015;
   --hot:#0071e3; --hot-ink:#ffffff; --hot-soft:#e8f1fc; --hot-soft-ink:#0066cc;
   --f-body:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo",system-ui,sans-serif;
   --f-num:ui-rounded,"SF Pro Rounded","Pretendard Variable",Pretendard,-apple-system,system-ui,sans-serif;
@@ -26,14 +26,14 @@
   :root:not([data-theme="light"]){
     --bg:#12110f; --surface:#1f1d1a; --surface2:#2c2925; --ink:#f7f1e8; --muted:#a8a5a0; --line:#3a3631;
     --accent:#0071e3; --accent-ink:#ffffff; --accent-soft:#0a2540; --link:#2997ff;
-    --blush:#0a2540; --blush-ink:#2997ff; --ok:#30d158; --ok-soft:#0f2a17; --seg-on:#57534d; --warn:#ffd60a; --bad:#ff453a; color-scheme:dark;
+    --blush:#0a2540; --blush-ink:#2997ff; --ok:#30d158; --ok-soft:#0f2a17; --seg-on:#57534d; --fig-near:#8f887d; --fig-far:#5f5951; --fig-ol:#0c0b0a; --fig-bg:var(--surface); --warn:#ffd60a; --bad:#ff453a; color-scheme:dark;
     --hot:#2997ff; --hot-ink:#12110f; --hot-soft:#0a2540; --hot-soft-ink:#2997ff;
   }
 }
 :root[data-theme="dark"]{
   --bg:#12110f; --surface:#1f1d1a; --surface2:#2c2925; --ink:#f7f1e8; --muted:#a8a5a0; --line:#3a3631;
     --accent:#0071e3; --accent-ink:#ffffff; --accent-soft:#0a2540; --link:#2997ff;
-    --blush:#0a2540; --blush-ink:#2997ff; --ok:#30d158; --ok-soft:#0f2a17; --seg-on:#57534d; --warn:#ffd60a; --bad:#ff453a; color-scheme:dark;
+    --blush:#0a2540; --blush-ink:#2997ff; --ok:#30d158; --ok-soft:#0f2a17; --seg-on:#57534d; --fig-near:#8f887d; --fig-far:#5f5951; --fig-ol:#0c0b0a; --fig-bg:var(--surface); --warn:#ffd60a; --bad:#ff453a; color-scheme:dark;
     --hot:#2997ff; --hot-ink:#12110f; --hot-soft:#0a2540; --hot-soft-ink:#2997ff;
 }
 *{box-sizing:border-box}
@@ -177,6 +177,8 @@ details.gx[open] summary::after{content:"–"}
 .list.ex li{align-items:center;justify-content:flex-start;padding:8px 0}
 .list.ex .t{flex:1}
 .thumb{width:56px;height:34px;flex:none;border-radius:8px;background:var(--surface2);display:block}
+.thumb,.mo{--fig-bg:var(--surface2)}
+.figbtn + .ring{width:min(48vw,200px,24vh)}
 .plfig{display:block;width:100%;max-width:320px;height:150px;margin:0 auto;padding:12px;background:var(--surface);border-radius:18px;box-sizing:border-box}
 .plfig.sm{height:110px;max-width:240px;margin:6px auto 8px}
 .tag.ok{background:var(--ok-soft);color:var(--ok)}
@@ -202,7 +204,9 @@ details.gx[open] summary::after{content:"–"}
 .sp-grid{flex:1;min-height:0;width:100%;max-width:480px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(4,minmax(0,1fr));gap:4px 8px;
   -webkit-mask-image:linear-gradient(#000 90%,transparent);mask-image:linear-gradient(#000 90%,transparent)}
 .sp-grid svg{display:block;width:100%;height:100%;min-width:0;min-height:0;opacity:0;transform:translateY(8px);transition:opacity .6s ease,transform .6s ease}
-.sp-grid svg.on{opacity:.5;transform:none}
+.sp-grid svg.on{opacity:1;transform:none}
+.sp-grid .pt{fill:var(--surface);transition:fill var(--t-std) var(--ease)}.sp-grid .pf{stroke:var(--ink);fill:var(--ink);transition:stroke var(--t-std) var(--ease),fill var(--t-std) var(--ease)}.sp-grid g.pf{fill:none}
+.sp-grid svg.cur .pt{fill:var(--accent)}.sp-grid svg.cur .pf{stroke:var(--accent-ink)}.sp-grid svg.cur circle.pf{fill:var(--accent-ink)}
 .sp-mid{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
 .sp-mid img{width:72px;height:72px;border-radius:17px}
 .sp-mid h1{font-size:28px}
@@ -318,7 +322,7 @@ Object.assign(LIB,{
   w1:{n:'제자리 행진',g:'워밍업',k:'t',fixed:1,d:60,L:[['제자리 행진 + 팔 흔들기','무릎을 가볍게 들며 걷기|팔을 크게 흔들기|몸이 따뜻해질 때까지','']]},
   w2:{n:'캣-카우',g:'워밍업',k:'t',fixed:1,d:40,L:[['캣-카우','네발기기에서 등을 둥글게 말았다 펴기|호흡에 맞춰 천천히|목은 편하게','']]},
   w3:{n:'어깨 돌리기',g:'워밍업',k:'t',fixed:1,d:30,L:[['어깨·팔 돌리기','팔을 쭉 펴고 어깨 옆에서 큰 원을 그리듯 앞으로 10번, 뒤로 10번|어깨는 귀에서 멀리, 목에 힘 빼기|처음엔 작게 시작해 점점 크게','']]},
-  w4:{n:'월드 그레이티스트',g:'워밍업',k:'t',fixed:1,d:40,L:[['월드 그레이티스트 스트레치','런지 자세에서 팔꿈치를 발 쪽으로|가슴을 열어 회전|좌우 번갈아','']]},
+  w4:{n:'월드 그레이티스트',g:'워밍업',k:'t',fixed:1,d:40,L:[['월드 그레이티스트 스트레치','뒷무릎을 바닥에서 띄운 긴 런지, 양손은 앞발 안쪽 바닥|앞발 쪽 팔꿈치를 발 안쪽으로 내리기|그 팔을 천장으로 뻗으며 몸통 돌리기, 시선은 손끝|좌우 번갈아','뒷무릎이 바닥에 닿거나 허리가 처지는 것']]},
   c4:{n:'고관절 앞쪽 스트레칭',g:'쿨다운',k:'t',fixed:1,d:40,L:[['고관절 굴곡근 스트레칭','한쪽 무릎을 바닥에 대고 런지 자세|꼬리뼈를 말아 넣고 앞으로 체중 이동, 허리는 꺾지 않기|좌우 각각 20초','']]},
   c1:{n:'하체 스트레칭',g:'쿨다운',k:'t',fixed:1,d:60,L:[['둔근·햄스트링 스트레칭','한 다리씩 펴고 고관절에서 상체를 숙이기, 등은 길게|통증 없이 당기는 느낌까지|호흡 길게, 한쪽 30초','']]},
   c2:{n:'가슴 스트레칭',g:'쿨다운',k:'t',fixed:1,d:40,L:[['가슴·어깨 스트레칭','문틀에 팔꿈치를 어깨 높이 이하로 대고 가슴 열기|어깨 앞쪽이 찌릿하면 바로 멈추기|좌우 각각','']]},
@@ -360,6 +364,7 @@ const GY=108; // 바닥 y
 const LEN={tor:32,ua:16,fa:15,th:20,sh:19,ft:8,hd:6};
 const dirA=a=>[Math.cos(a*Math.PI/180),Math.sin(a*Math.PI/180)];
 const lerp=(a,b,t)=>a+(b-a)*t;
+const n3=q=>{const n=Math.hypot(q[0],q[1],q[2])||1;return [q[0]/n,q[1]/n,q[2]/n];};
 /* 관절 방향은 해부학 기준으로 고정: kind 'k'=무릎(뒤로 굽힘), 'e'=팔꿈치(앞으로 굽힘). 인형은 거울상 없이 회전만 하므로 항상 같은 쪽 해를 고르면 돼요 */
 function ik(o,t,l1,l2,kind){
   const dx=t[0]-o[0],dy=t[1]-o[1];
@@ -372,7 +377,9 @@ function ik(o,t,l1,l2,kind){
 }
 function limb(o,sp,l1,l2,kind,ankle,base){
   if(sp.to){const t=sp.to==='an'?ankle:sp.to;return ik(o,t,l1,l2,kind);}
+  if(sp.p3){const d=sp.p3.map(n3),j=[o[0]+d[0][0]*l1,o[1]+d[0][1]*l1];return {j,e:[j[0]+d[1][0]*l2,j[1]+d[1][1]*l2]};}
   const r=sp.rel?base:0,a=dirA(sp.a[0]+r),b=dirA(sp.a[1]+r);
+  l1*=sp.l||1;l2*=sp.ls||1; // ponytail: 몸쪽으로 향한 다리를 짧게 그려 원근을 흉내낸다 (클램쉘)
   const j=[o[0]+a[0]*l1,o[1]+a[1]*l1];return {j,e:[j[0]+b[0]*l2,j[1]+b[1]*l2]};
 }
 function fk(p){
@@ -400,60 +407,136 @@ function poseAt(an,ph){
 }
 /* ===== 자극 부위 ===== */
 const MNAME={chest:'가슴',shoulder:'어깨',tri:'삼두',back:'등',rear:'뒷어깨',core:'복부',obl:'옆구리',glute:'둔근',abd:'옆 엉덩이',quad:'앞벅지',ham:'뒷벅지',calf:'종아리',cardio:'심폐'};
-function nrm(a,b,s){const dx=b[0]-a[0],dy=b[1]-a[1],l=Math.hypot(dx,dy)||1;return s>0?[-dy/l,dx/l]:[dy/l,-dx/l];}
-function band(a,b,t0,t1,off,w,s,op){
-  const n=nrm(a,b,s),p=t=>[a[0]+(b[0]-a[0])*t+n[0]*off,a[1]+(b[1]-a[1])*t+n[1]*off];
-  const A=p(t0),B=p(t1);
-  return '<line x1="'+A[0].toFixed(1)+'" y1="'+A[1].toFixed(1)+'" x2="'+B[0].toFixed(1)+'" y2="'+B[1].toFixed(1)+'" stroke="var(--hot)" stroke-width="'+w+'" stroke-linecap="round" opacity="'+op+'"/>';
+/* ===== 동작 그림: 사선 일러스트 =====
+   뼈대(fk)를 3D로 세우고(x 앞뒤·앞 +, y 높이·아래 +, z 좌우·카메라 쪽 +) 사선 카메라로 투영한다.
+   몸은 끝이 둥근 원뿔형 마디(허벅지>정강이, 위팔>아래팔)를 윤곽선과 함께 칠하고, 자극 부위는 해당 마디 위에 블루로 칠한다.
+   pose.rot/hrot: 척추 축 둘레 어깨·골반 회전(도) · limb.p3: 마디 방향 3D 벡터 [윗마디, 아랫마디](먼 쪽은 z 대칭) · leg.z: 무릎·발목 좌우 이동 */
+const FIG={cx:100,hw:6,sw:8.5,R:{th:[5.6,4],sh:[4,2.7],ft:[2.5,1.8],ua:[3.6,2.8],fa:[2.8,2.1],nk:[2.7,2.7]},hd:6.6,ol:1.1};
+/* 카메라: 기본은 사선 35°·위에서 12°. an.yaw로 동작별 조정, 팝업 보조 보기는 서 있는 동작=정면, 바닥 동작=위에서 */
+function cam(an,view){
+  let y=(an&&an.yaw)||35,p=12;
+  if(view==='f'){if(an.low){y=18;p=62;}else{y=80;p=8;}}
+  const k=y+'/'+p;if(FIG.k===k)return;FIG.k=k;
+  const t=y*Math.PI/180,e=p*Math.PI/180;FIG.c=Math.cos(t);FIG.s=Math.sin(t);FIG.cp=Math.cos(e);FIG.sp=Math.sin(e);
+  FIG.eye=[FIG.s*FIG.cp,-FIG.sp,FIG.c*FIG.cp]; // 몸에서 카메라 쪽 방향
+  FIG.mx='matrix('+[FIG.c,FIG.s*FIG.sp,0,FIG.cp,FIG.cx*(1-FIG.c),GY*(1-FIG.cp)-FIG.cx*FIG.s*FIG.sp].map(v=>v.toFixed(4)).join(' ')+')';
 }
-function dot(c,r,op,n,off){
-  const x=c[0]+(n?n[0]*off:0),y=c[1]+(n?n[1]*off:0);
-  return '<circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="'+r+'" fill="var(--hot)" opacity="'+op+'"/>';
+cam();
+const fpj=q=>[FIG.cx+(q[0]-FIG.cx)*FIG.c-q[2]*FIG.s,GY+(q[1]-GY)*FIG.cp+((q[0]-FIG.cx)*FIG.s+q[2]*FIG.c)*FIG.sp];
+const fdep=q=>(q[0]-FIG.cx)*FIG.s*FIG.cp-(q[1]-GY)*FIG.sp+q[2]*FIG.c*FIG.cp;
+const v3=(a,d,k)=>[a[0]+d[0]*k,a[1]+d[1]*k,a[2]+d[2]*k];
+const sub3=(a,b)=>[a[0]-b[0],a[1]-b[1],a[2]-b[2]],dot3=(a,b)=>a[0]*b[0]+a[1]*b[1]+a[2]*b[2],mix3=(a,b,t)=>[a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t];
+function fig3(p){
+  const J=fk(p),ul=Math.hypot(J.sh[0]-J.hip[0],J.sh[1]-J.hip[1])||1,u=[(J.sh[0]-J.hip[0])/ul,(J.sh[1]-J.hip[1])/ul,0];
+  const lat=r=>{const a=(r||0)*Math.PI/180;return [u[1]*Math.sin(a),-u[0]*Math.sin(a),Math.cos(a)];};
+  const L=lat(p.rot),H=lat(p.hrot),sh=[J.sh[0],J.sh[1],0],hip=[J.hip[0],J.hip[1],0];
+  const W={hip,sh,head:[J.head[0],J.head[1],0],u,L,front:[-(u[1]*L[2]-u[2]*L[1]),-(u[2]*L[0]-u[0]*L[2]),-(u[0]*L[1]-u[1]*L[0])],
+    shN:v3(sh,L,FIG.sw),shF:v3(sh,L,-FIG.sw),hipN:v3(hip,H,FIG.hw),hipF:v3(hip,H,-FIG.hw)};
+  const p3=(s,d,l1,l2,m)=>{const q=d.map(v=>n3([v[0],v[1],v[2]*m])),e=v3(s,q[0],l1);return [e,v3(e,q[1],l2)];};
+  const arm=(s,sp,el,ha,m)=>{
+    if(sp.p3)return p3(s,sp.p3,LEN.ua,LEN.fa,m);
+    if(sp.to&&sp.to!=='an'){const r=ik([s[0],s[1]],sp.to,LEN.ua,LEN.fa,'e');return [[r.j[0],r.j[1],s[2]],[r.e[0],r.e[1],s[2]]];}
+    return [[s[0]+el[0]-J.sh[0],s[1]+el[1]-J.sh[1],s[2]],[s[0]+ha[0]-J.sh[0],s[1]+ha[1]-J.sh[1],s[2]]];
+  };
+  const leg=(h,sp,kn,an,toe,m)=>{
+    const z=sp.z||[0,0],dx=h[0]-hip[0],dy=h[1]-hip[1],tv=[toe[0]-an[0],toe[1]-an[1],0];let K,A;
+    if(sp.p3){[K,A]=p3(h,sp.p3,LEN.th,LEN.sh,m);return [K,A,v3(A,tv,1)];}
+    if(sp.to&&sp.to!=='an'){const r=ik([h[0],h[1]],[sp.to[0]+dx,sp.to[1]+dy],LEN.th,LEN.sh,'k');K=r.j;A=r.e;}
+    else{K=[kn[0]+dx,kn[1]+dy];A=[an[0]+dx,an[1]+dy];}
+    return [[K[0],K[1],h[2]+z[0]*m],[A[0],A[1],h[2]+z[1]*m],[A[0]+tv[0],A[1]+tv[1],h[2]+z[1]*m]];
+  };
+  [W.el,W.hand]=arm(W.shN,p.arm,J.el,J.hand,1);
+  [W.el2,W.hand2]=p.arm2?arm(W.shF,p.arm2,J.el2,J.hand2,1):arm(W.shF,p.arm,J.el,J.hand,-1);
+  [W.kn,W.an,W.toe]=leg(W.hipN,p.leg,J.kn,J.an,J.toe,1);
+  [W.kn2,W.an2,W.toe2]=p.leg2?leg(W.hipF,p.leg2,J.kn2,J.an2,J.toe2,1):leg(W.hipF,p.leg,J.kn,J.an,J.toe,-1);
+  return W;
 }
-function muscleSvg(m,J,op){
-  const tn=nrm(J.hip,J.sh,1),ln=nrm(J.hip,J.kn,-1);
-  switch(m){
-    case 'chest':return band(J.hip,J.sh,.6,.98,3,13,1,op);
-    case 'back':return band(J.hip,J.sh,.15,.9,-3,12,1,op);
-    case 'rear':return band(J.hip,J.sh,.72,1,-3,11,1,op)+dot(J.sh,5,op*.8,tn,-3);
-    case 'shoulder':return dot(J.sh,8,op);
-    case 'tri':return band(J.sh,J.el,.05,1,0,8,-1,op);
-    case 'core':return band(J.hip,J.sh,.05,.62,3,12,1,op);
-    case 'obl':return band(J.hip,J.sh,.1,.6,0,15,1,op);
-    case 'glute':return dot(J.hip,9,op,ln,-3);
-    case 'abd':return dot(J.hip,8,op,tn,-1);
-    case 'quad':return band(J.hip,J.kn,.05,1,3,10,-1,op)+(J.kn2?band(J.hip,J.kn2,.05,1,3,8,-1,op*.5):'');
-    case 'ham':return band(J.hip,J.kn,.05,1,-3,10,-1,op)+(J.kn2?band(J.hip,J.kn2,.05,1,-3,8,-1,op*.5):'');
-    case 'calf':return band(J.kn,J.an,.1,.95,-3,8,-1,op);
-    case 'cardio':return dot(J.sh,7,op,tn,-1)+band(J.hip,J.sh,0,1,0,9,1,op*.45)+band(J.hip,J.kn,0,1,0,8,1,op*.4)+band(J.kn,J.an,0,1,0,7,1,op*.4);
-  }
-  return '';
+const PTS=['hip','sh','head','shN','shF','hipN','hipF','el','hand','el2','hand2','kn','an','toe','kn2','an2','toe2'];
+/* 끝이 둥근 원뿔형 마디(화면 좌표, 반지름 r1→r2) */
+function capP(a,b,r1,r2){
+  const dx=b[0]-a[0],dy=b[1]-a[1],l=Math.hypot(dx,dy);
+  if(l<.01||l<Math.abs(r1-r2))return '<circle cx="'+a[0].toFixed(1)+'" cy="'+a[1].toFixed(1)+'" r="'+Math.max(r1,r2).toFixed(1)+'"/>';
+  const nx=-dy/l,ny=dx/l,f=v=>v.toFixed(1),P=(c,r,s)=>f(c[0]+nx*r*s)+' '+f(c[1]+ny*r*s);
+  return '<path d="M'+P(a,r1,1)+'L'+P(b,r2,1)+'A'+f(r2)+' '+f(r2)+' 0 0 0 '+P(b,r2,-1)+'L'+P(a,r1,-1)+'A'+f(r1)+' '+f(r1)+' 0 0 0 '+P(a,r1,1)+'Z"/>';
 }
-const ln=(a,b,w,op)=>'<line x1="'+a[0].toFixed(1)+'" y1="'+a[1].toFixed(1)+'" x2="'+b[0].toFixed(1)+'" y2="'+b[1].toFixed(1)+'" stroke="var(--ink)" stroke-width="'+w+'" stroke-linecap="round" opacity="'+op+'"/>';
-function bodySvg(J,op){
-  let s='';
-  if(J.kn2)s+=ln(J.hip,J.kn2,3.4,.38*op)+ln(J.kn2,J.an2,3.4,.38*op)+ln(J.an2,J.toe2,3.4,.38*op);
-  if(J.el2)s+=ln(J.sh,J.el2,3.4,.38*op)+ln(J.el2,J.hand2,3.4,.38*op);
-  return s+ln(J.hip,J.sh,5,op)+ln(J.sh,J.el,3.8,op)+ln(J.el,J.hand,3.8,op)+ln(J.hip,J.kn,4.2,op)+ln(J.kn,J.an,4.2,op)+ln(J.an,J.toe,3.4,op)+
-    '<circle cx="'+J.head[0].toFixed(1)+'" cy="'+J.head[1].toFixed(1)+'" r="'+LEN.hd+'" fill="var(--surface)" stroke="var(--ink)" stroke-width="3" opacity="'+op+'"/>';
+const pp=q=>fpj(q);
+/* 마디 하나: 윤곽선(조금 크게) 위에 몸 색 */
+const seg=(a,b,r,col)=>'<g fill="var(--fig-ol)">'+capP(pp(a),pp(b),r[0]+FIG.ol,r[1]+FIG.ol)+'</g><g fill="'+col+'">'+capP(pp(a),pp(b),r[0],r[1])+'</g>';
+const hot=(a,b,r1,r2,op)=>'<g fill="var(--hot)" opacity="'+op.toFixed(2)+'">'+capP(pp(a),pp(b),r1,r2)+'</g>';
+const hotDot=(c,r,op)=>hot(c,c,r,r,op);
+/* 마디의 앞(무릎·팔꿈치가 향하는 쪽) 방향: 아랫마디가 접히는 반대쪽, 곧으면 몸 앞쪽 */
+function sideOf(a,b,c,front){
+  const ax=n3(sub3(b,a)),w=sub3(c,b),wp=v3(w,ax,-dot3(w,ax));let d=wp;
+  if(Math.hypot(...wp)<1.5)d=v3(front,ax,-dot3(front,ax));else d=[-wp[0],-wp[1],-wp[2]];
+  return n3(d);
 }
-/* 정면 피규어(점핑잭용): 팔·다리 각도(수직 기준 좌우 벌림) */
-function frontJ(p){
-  const hip=[100,p.hy],sh=[100,p.hy-32],a=d=>dirA(90+d);
-  const arm=(s,d)=>{const v=dirA(d);return [[sh[0]+v[0]*16,sh[1]+v[1]*16],[sh[0]+v[0]*31,sh[1]+v[1]*31]];};
-  const leg=d=>{const v=a(d);return [hip[0]+v[0]*39,hip[1]+v[1]*39];};
-  return {hip,sh,head:[100,sh[1]-9],al:p.al,ar:p.ar,ll:p.ll,lr:p.lr,arm,leg};
+function figSvg(W,mu,pulse,oneArm,ghost){
+  const near='var(--fig-near)',far='var(--fig-far)',op=k=>mu&&mu.p.indexOf(k)>=0?.6+.3*pulse:mu&&mu.s.indexOf(k)>=0?.28+.12*pulse:0;
+  const parts=[];
+  const fr=W.front,vis=n=>dot3(n,FIG.eye)>-.12;
+  const legP=(h,k,a,t,col,side)=>{
+    const fq=sideOf(h,k,a,fr);let s=seg(h,k,FIG.R.th,col)+seg(k,a,FIG.R.sh,col)+seg(a,t,FIG.R.ft,col);
+    if(!ghost){
+      let o;
+      if((o=op('quad')))s+=hot(v3(mix3(h,k,.18),fq,1.6),v3(mix3(h,k,.85),fq,1.4),3.8,2.8,o);
+      if((o=op('ham')))s+=hot(v3(mix3(h,k,.18),fq,-1.6),v3(mix3(h,k,.85),fq,-1.4),3.8,2.8,o);
+      if((o=op('calf')))s+=hot(v3(mix3(k,a,.12),fq,-1.6),v3(mix3(k,a,.6),fq,-1),3,1.9,o);
+      if((o=op('cardio')))s+=hot(mix3(h,k,.2),mix3(k,a,.7),3.4,2.2,o*.5);
+    }
+    return s;
+  };
+  const armP=(s0,e,h,col)=>{
+    let s=seg(s0,e,FIG.R.ua,col)+seg(e,h,FIG.R.fa,col)+'<g fill="var(--fig-ol)">'+capP(pp(h),pp(h),2.9,2.9)+'</g><g fill="'+col+'">'+capP(pp(h),pp(h),2.1,2.1)+'</g>';
+    if(!ghost){
+      const fq=sideOf(s0,e,h,fr);let o;
+      if((o=op('tri')))s+=hot(v3(mix3(s0,e,.2),fq,-1.3),v3(mix3(s0,e,.9),fq,-1.1),2.8,2.2,o);
+      if((o=op('shoulder')))s+=hotDot(v3(s0,sub3(e,s0),.08),3.9,o);
+      if((o=op('rear')))s+=hotDot(v3(s0,fr,-2),3.3,o);
+    }
+    return s;
+  };
+  const torso=()=>{
+    const wN=v3(mix3(W.sh,W.hip,.55),W.L,FIG.sw*.72),wF=v3(mix3(W.sh,W.hip,.55),W.L,-FIG.sw*.72);
+    const q=[W.shN,W.shF,wF,W.hipF,W.hipN,wN].map(pp).map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');
+    let s='<polygon points="'+q+'" fill="var(--fig-ol)" stroke="var(--fig-ol)" stroke-width="'+(9+FIG.ol*2)+'" stroke-linejoin="round"/><polygon points="'+q+'" fill="'+near+'" stroke="'+near+'" stroke-width="9" stroke-linejoin="round"/>';
+    if(!ghost){
+      let o;const at=(t,f,l)=>v3(v3(mix3(W.hip,W.sh,t),fr,f),W.L,l);
+      if((o=op('chest'))&&vis(fr))s+=hotDot(at(.8,4,4.2),4.4,o)+hotDot(at(.8,4,-4.2),4.4,o);
+      if((o=op('core'))&&vis(fr))s+=hot(at(.15,4,0),at(.58,4,0),4.2,4.6,o);
+      const bk=[-fr[0],-fr[1],-fr[2]];
+      if((o=op('back'))&&vis(bk))s+=hot(at(.2,-2.5,0),at(.85,-2.5,0),4,5,o);
+      if((o=op('obl'))){const sg=vis(W.L)?1:-1;s+=hot(at(.12,0,sg*7.5),at(.6,0,sg*7.5),3.2,3.6,o);}
+      if((o=op('cardio'))&&vis(fr))s+=hotDot(at(.75,4,1.5),5,o);
+      // 엉덩이는 골반(몸통 아래)에 칠한다: 카메라 쪽 골반 기준
+      const hn=vis(sub3(W.hipN,W.hip))?W.hipN:W.hipF;
+      if((o=op('glute')))s+=hotDot(v3(v3(hn,bk,3),W.u,2),4.8,o);
+      if((o=op('abd')))s+=hotDot(v3(v3(hn,sub3(hn,W.hip),.3),W.u,4),4,o);
+    }
+    return s;
+  };
+  const head=()=>{const n0=v3(W.sh,W.u,1),hd=W.head;return seg(n0,mix3(n0,hd,.6),FIG.R.nk,near)+'<g fill="var(--fig-ol)">'+capP(pp(hd),pp(hd),FIG.hd+FIG.ol,FIG.hd+FIG.ol)+'</g><g fill="'+near+'">'+capP(pp(hd),pp(hd),FIG.hd,FIG.hd)+'</g>';};
+  const avg=(...q)=>q.reduce((s,v)=>s+fdep(v),0)/q.length;
+  parts.push([avg(W.hipF,W.kn2,W.an2),legP(W.hipF,W.kn2,W.an2,W.toe2,far)]);
+  parts.push([avg(W.hipN,W.kn,W.an),legP(W.hipN,W.kn,W.an,W.toe,near)]);
+  if(!oneArm)parts.push([avg(W.shF,W.el2,W.hand2),armP(W.shF,W.el2,W.hand2,far)]);
+  parts.push([avg(W.shN,W.el,W.hand),armP(W.shN,W.el,W.hand,near)]);
+  parts.push([fdep(mix3(W.sh,W.hip,.5)),torso()]);
+  parts.push([fdep(W.head)-.5,head()]);
+  // 몸통 앞을 지나는 팔다리가 가려지지 않게: 깊이 순(먼 것부터)
+  return parts.sort((a,b)=>a[0]-b[0]).map(x=>x[1]).join('');
 }
-function frontSvg(p,mu,pulse){
-  const F=frontJ(p),op=.55+.35*pulse;
-  const A=a=>{const v=dirA(a);return [F.sh[0]+v[0]*31,F.sh[1]+v[1]*31];};
-  const L=d=>{const v=dirA(90+d);return [F.hip[0]+v[0]*39,F.hip[1]+v[1]*39];};
-  const e=[A(F.al),A(F.ar),L(F.ll),L(F.lr)];
-  let s='<line x1="100" y1="'+(F.hip[1]-32)+'" x2="100" y2="'+F.hip[1]+'" stroke="var(--hot)" stroke-width="15" stroke-linecap="round" opacity="'+op*.5+'"/>';
-  e.forEach((q,i)=>{const o=i<2?F.sh:F.hip;s+='<line x1="'+o[0]+'" y1="'+o[1]+'" x2="'+q[0].toFixed(1)+'" y2="'+q[1].toFixed(1)+'" stroke="var(--hot)" stroke-width="9" stroke-linecap="round" opacity="'+op*.5+'"/>';});
-  s+=ln(F.hip,F.sh,5,.9);
-  e.forEach((q,i)=>{s+=ln(i<2?F.sh:F.hip,q,i<2?3.8:4.2,.9);});
-  return s+'<circle cx="100" cy="'+F.head[1]+'" r="6" fill="var(--surface)" stroke="var(--ink)" stroke-width="3"/>';
+/* 벽면: 등 뒤 벽을 좌우로 넓은 면으로 투영한다(월 슬라이드) */
+function wallSvg(x){const q=[[GY,24],[30,24],[30,-24],[GY,-24]].map(c=>fpj([x,c[0],c[1]])).map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');
+  return '<polygon points="'+q+'" fill="var(--surface2)" stroke="var(--line)" stroke-width="1.5" stroke-linejoin="round"/>';}
+/* 바닥 매트 */
+function matSvg(f){
+  const z=18,q=[[f.wmn-8,z],[f.wmx+8,z],[f.wmx+8,-z],[f.wmn-8,-z]].map(c=>fpj([c[0],GY,c[1]])).map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');
+  return '<polygon points="'+q+'" fill="var(--line)" stroke="var(--line)" stroke-width="4" stroke-linejoin="round"/>';
+}
+function trailS(an){
+  const k='__tr'+FIG.k;if(an[k])return an[k];
+  const a=[];for(let i=0;i<=40;i++){a.push(fpj(fig3(poseAt(an,i/40)).hand));}
+  return an[k]='<polyline points="'+a.map(q=>q[0].toFixed(1)+','+q[1].toFixed(1)).join(' ')+'" fill="none" stroke="var(--muted)" stroke-width="1.4" stroke-dasharray="3 3" opacity=".75"/>';
 }
 /* ===== 동작별 애니메이션 정의 ===== */
 const ANIM={};
@@ -505,19 +588,20 @@ function tapAnim(){
   return {poses:[Object.assign({arm:{to:[hx,hy],pref:'L'},arm2:{to:[hx,hy],pref:'L'}},base),Object.assign({arm:{to:[hx+5,T.S[1]+8],pref:'L'},arm2:{to:[hx,hy],pref:'L'}},base)],props:'',cap:['플랭크 유지','한 손으로 어깨 터치']};
 }
 function sideAnim(kind){
-  const S=[128,88],A=kind==='k'?null:[60,102];let mk,sup='<g stroke="var(--muted)" stroke-width="2.6" stroke-linecap="round"><line x1="128" y1="88" x2="128" y2="104"/><line x1="128" y1="104" x2="142" y2="104"/></g>';
+  const S=[128,88],A=kind==='k'?null:[60,102];let mk,sup='<g stroke="var(--muted)" stroke-width="2.6" stroke-linecap="round"><line x1="128" y1="96" x2="128" y2="104"/><line x1="128" y1="104" x2="142" y2="104"/></g>';
   const arm={a:[-90,-90]};
   if(kind==='k'){
-    mk=dy=>{const hip=[96,98+dy],tt=Math.atan2(S[1]-hip[1],S[0]-hip[0])*180/Math.PI,th=Math.atan2(104-hip[1],74-hip[0])*180/Math.PI;return {hip,t:tt,arm,leg:{a:[th,180]},foot:180};};
+    mk=dy=>{const hip=[96,98+dy],tt=Math.atan2(S[1]-hip[1],S[0]-hip[0])*180/Math.PI,th=Math.atan2(104-hip[1],74-hip[0])*180/Math.PI;return {hip,t:tt,rot:90,hrot:90,arm,leg:{a:[th,180]},foot:180};};
   }else{
-    mk=dy=>{const B=bodyPose(A,88,1),hip=[B.hip[0],B.hip[1]+dy],tt=Math.atan2(S[1]-hip[1],S[0]-hip[0])*180/Math.PI;return {hip,t:tt,arm,leg:{to:A,pref:'U'},foot:180};};
+    mk=dy=>{const B=bodyPose(A,88,1),hip=[B.hip[0],B.hip[1]+dy],tt=Math.atan2(S[1]-hip[1],S[0]-hip[0])*180/Math.PI;return {hip,t:tt,rot:90,hrot:90,arm,leg:{to:A,pref:'U'},foot:180};};
   }
   if(kind==='h')return {poses:[mk(0),mk(12)],props:sup,cap:['골반 올리기','골반 내리기']};
   return {poses:[mk(0),mk(-1)],props:sup,hold:1,cap:['몸을 옆으로 일직선 유지']};
 }
-function squatAnim(chairOn,slow){
+function squatAnim(chairOn,slow,shallow){
   const L={to:[100,106],pref:'R'},A={hip:[100,67],t:-90,arm:{to:[126,40]},leg:L,foot:0};
-  const B={hip:chairOn?[76,86]:[86,88],t:-62,arm:{to:[126,60]},leg:L,foot:0};
+  const B={hip:chairOn?[76,86]:shallow?[93,78]:[86,88],t:shallow?-74:-62,arm:{to:[126,shallow?52:60]},leg:L,foot:0};
+  if(shallow)return {poses:[A,B],props:'',cap:['서서 준비','허벅지 45도까지만 앉기']};
   return {poses:[A,B],props:chairOn?chair(52,88,28,'l'):'',dur:slow?4200:2600,cap:slow?['서서 준비','3초 동안 천천히 앉기']:['서서 준비','엉덩이를 뒤로 내려 앉기']};
 }
 function lungeAnim(kind){
@@ -572,12 +656,12 @@ function coreAnim(kind){
   return {poses:[a,b],props:'',cap:['무릎을 띄운 자세','한 손으로 어깨 터치']};
 }
 function ytwPoses(seq){
-  const Y={p:PR(-10,-14,-14,190,103),at:[60,60]},T={p:PR(-10,-50,-50,190,103),at:[0,0]},W={p:PR(-10,20,-150,190,103),at:[-35,75]};
-  return seq.map(k=>{const o=k==='Y'?Y:k==='T'?T:W;return Object.assign({},o.p,{AT:o.at});});
+  const ar={Y:[[.8,-.25,.55],[.8,-.25,.55]],T:[[0,-.25,1],[0,-.25,1]],W:[[-.5,-.2,.85],[.65,-.2,.7]]};
+  return seq.map(k=>Object.assign(PR(-10,0,0,190,103),{arm:{p3:ar[k]}}));
 }
 function proneAnim(kind){
   if(kind==='s')return {poses:[PR(0,0,0,180),PR(-12,-14,-14,192,103)],props:'',cap:['엎드려 준비','팔·다리·가슴 들어 올리기']};
-  if(kind==='a')return {poses:[PR(-10,188,188,190,103),PR(-10,346,346,190,103)],pv:1,trail:1,props:'',cap:['팔을 몸 옆으로','큰 원을 그리며 머리 위로']};
+  if(kind==='a')return {poses:[Object.assign(PR(-10,0,0,190,103),{arm:{p3:[[-1,-.15,.25],[-1,-.15,.25]]}}),Object.assign(PR(-10,0,0,190,103),{arm:{p3:[[1,-.15,.3],[1,-.15,.3]]}})],pv:1,trail:1,props:'',cap:['팔을 몸 옆으로','큰 원을 그리며 머리 위로']};
   if(kind==='y')return {poses:ytwPoses(['Y','T','W']),cy:1,pv:1,trail:1,props:'',dur:6000,cap:['Y: 팔을 귀 옆으로 쭉 뻗어 들기','T: 팔을 옆으로 벌려 일자로','W: 팔꿈치를 접어 날개뼈 조이기']};
   return {poses:ytwPoses(['Y','Y','T','T','W','W']),cy:1,pv:1,trail:1,props:'',dur:12000,cap:['Y 모양 3초 유지','T로 이동','T 모양 3초 유지','W로 이동','W 모양 3초 유지','Y로 돌아가기']};
 }
@@ -587,11 +671,15 @@ function rowAnim(){
   return {poses:[mk(96),mk(84)],props:'<g stroke="var(--muted)" stroke-width="3" stroke-linecap="round"><line x1="'+(hx-24)+'" y1="72" x2="'+(hx+36)+'" y2="72"/><line x1="'+(hx-20)+'" y1="72" x2="'+(hx-20)+'" y2="'+GY+'"/></g>',cap:['매달리기','가슴을 테이블로 당기기']};
 }
 function wallAnim(){
-  const mk=hy=>({hip:[92,67],t:-90,arm:{to:[89,hy],pref:'R'},leg:{to:[94,106]},foot:0});
-  return {poses:[mk(46),mk(14)],pv:1,trail:1,props:wall(86),cap:['W 자세 (손등을 벽에)','Y 자세로 밀어 올리기']};
+  // 팔은 벽면(좌우·위아래)에서만 움직인다: 위팔·아래팔 방향을 3D로 지정, 먼 팔은 좌우 대칭
+  const mk=(u,f)=>({hip:[92,67],t:-90,arm:{p3:[u,f]},leg:{to:[94,106]},foot:0});
+  return {yaw:62,wall3:86,poses:[mk([-.15,.5,.85],[-.1,-.95,.3]),mk([-.12,-.82,.55],[-.1,-.84,.53])],pv:1,trail:1,props:'',cap:['W 자세 (손등을 벽에)','Y 자세로 밀어 올리기']};
 }
+/* 점핑잭 계열: 팔은 몸 옆면(p3), 다리는 좌우로 벌린다(z). 정면에 가까운 카메라로 본다 */
+const JK=(hy,arm,z1,z2,o)=>Object.assign({hip:[100,hy],t:-90,arm:{p3:arm},leg:{a:[90,90],z:z1},leg2:{a:[90,90],z:z2},foot:0,foot2:0},o||{});
+const JDN=[[0,1,.28],[0,1,.2]],JUP=[[0,-.62,.78],[0,-.95,.3]],JMID=[[0,.1,1],[0,-.6,.8]];
 function jackAnim(step){
-  return {front:1,poses:[{hy:67,al:100,ar:80,ll:6,lr:-6},{hy:step?68:70,al:225,ar:-45,ll:22,lr:step?-6:-22}],props:'',dur:1000,cap:['준비','팔 올리며 다리 벌리기']};
+  return {yaw:68,poses:[JK(67,JDN,[0,0],[0,0]),JK(step?68:70,JUP,step?[0,0]:[6,15],[-6,-15])],props:'',dur:1000,cap:['준비','팔 올리며 다리 벌리기']};
 }
 function burpAnim(){
   const A={hip:[100,67],t:-90,arm:{to:[100,64]},leg:{to:[100,106],pref:'R'},foot:0};
@@ -600,10 +688,10 @@ function burpAnim(){
   const C={hip:T.hip,t:T.t,arm:{to:[T.S[0],106]},leg:{to:Ap},foot:70};
   return {poses:[A,B,C,B],cy:1,props:'',dur:3200,cap:['서기','웅크려 손 짚기','플랭크로 점프','다시 웅크리기']};
 }
-function mcAnim(hh){
+function mcAnim(hh,x){
   const hy=GY-2-hh,A=[60,GY-7.5],T=bodyPose(A,hy-30,1),hx=T.S[0],tuck=[T.hip[0]+16,T.hip[1]+14];
-  const arm={to:[hx,hy],pref:'L'};
-  return {poses:[{hip:T.hip,t:T.t,arm,leg:{to:A},leg2:{to:tuck,pref:'U'},foot:70,foot2:70},{hip:T.hip,t:T.t,arm,leg:{to:tuck,pref:'U'},leg2:{to:A},foot:70,foot2:70}],props:hh?chair(hx-12,GY-hh,26,'r'):'',dur:1200,cap:['한쪽 무릎 당기기','반대쪽으로 교대']};
+  const arm={to:[hx,hy],pref:'L'},z0=[0,0],zx=x?[-14,-10]:z0; // x: 무릎을 반대쪽 팔꿈치로 (몸 아래를 가로질러)
+  return {poses:[{hip:T.hip,t:T.t,arm,leg:{to:A,z:z0},leg2:{to:tuck,pref:'U',z:zx.map(v=>-v)},foot:70,foot2:70},{hip:T.hip,t:T.t,arm,leg:{to:tuck,pref:'U',z:zx},leg2:{to:A,z:z0},foot:70,foot2:70}],props:hh?chair(hx-12,GY-hh,26,'r'):'',dur:1200,cap:['한쪽 무릎 당기기','반대쪽으로 교대']};
 }
 function warmAnim(kind){
   const st=(o)=>Object.assign({hip:[100,67],t:-90,arm:{a:[90,90]},leg:{to:[100,106],pref:'R'},foot:0},o);
@@ -615,8 +703,12 @@ function warmAnim(kind){
   if(kind==='cat')return {poses:[qd(86,-8,-20),qd(82,-30,35)],props:'',dur:3000,cap:['등 펴고 시선 위로','등 둥글게 말기']};
   if(kind==='child'){const c=(y)=>({hip:[82,y],t:9,arm:{to:[142,104]},leg:{a:[26.6,180]},foot:180});return {poses:[c(95),c(93)],props:'',hold:1,dur:3600,cap:['엉덩이를 뒤꿈치로, 호흡 유지']};}
   if(kind==='chest_f')return {poses:[st({arm:{a:[100,100]}}),st({hip:[98,67],arm:{a:[140,140]}})],props:'',hold:1,dur:3200,cap:['손을 등 뒤로 모으기','팔을 뒤로 들며 가슴 열기']};
-  const mk=(hip,t,F,Bk,hand)=>({hip,t,arm:{to:hand},leg:{to:F,pref:'R'},leg2:{to:Bk,pref:'D'},foot:0,foot2:70});
-  return {poses:[mk([99,88],-40,[114,106],[76,100.5],[126,106]),mk([99,88],-70,[114,106],[76,100.5],[112,28])],props:'',dur:3200,cap:['런지, 손 바닥에','가슴을 열며 팔 올리기']};
+  // 월드 그레이티스트 스트레치: 뒷무릎을 든 긴 런지, 앞정강이 수직. 양손 바닥 → 팔꿈치를 앞발 안쪽으로 → 몸통을 돌려 팔을 천장으로
+  // ponytail: 몸통이 돌 때 팔은 카메라 쪽을 지나므로 길이(l)를 줄여 원근으로 보여준다
+  // 몸통 회전(rot)으로 앞발 쪽 어깨가 위로 열리고, 그 팔은 옆을 지나 천장으로 간다. 반대 손은 바닥에 그대로
+  const mk=(t,hd,rot,u,f)=>({hip:[98,87],t,hd,rot,arm:{p3:[u,f]},arm2:{to:[124,106]},leg:{to:[118,106],pref:'R'},leg2:{to:[63,106],pref:'D'},foot:0,foot2:10});
+  const A=mk(-20,0,0,[-.09,1,0],[-.09,1,0]),B=mk(-8,0,0,[-.5,.87,0],[-1,0,0]),F=mk(-16,-15,35,[.15,.35,.92],[.1,.1,1]),G=mk(-20,-35,65,[.05,-.45,.9],[0,-.55,.85]),C=mk(-22,-55,88,[0,-1,.12],[0,-1,.08]);
+  return {poses:[A,B,F,G,C,G,F],cy:1,props:'',dur:7000,cap:['긴 런지, 양손은 앞발 안쪽 바닥','팔꿈치를 앞발 안쪽으로','몸통을 돌리며','몸통을 돌리며','팔을 천장으로, 시선은 손끝','돌아오기','돌아오기']};
 }
 function kneePushAnim(){
   const hx=114,hy=GY-2;
@@ -681,20 +773,36 @@ function nordicAnim(){
   a.gb=bridgeAnim('g');a.gb1=bridgeAnim('s');a.ht1=bridgeAnim('t');
   a.cr=calfAnim('b');a.cr1=calfAnim('s');a.cr2=calfAnim('h');
   a.jk_s=jackAnim(true);a.jk=jackAnim(false);a.burp=burpAnim();
-  a.mc_i=mcAnim(16);a.mc=mcAnim(0);
+  a.mc_i=mcAnim(16);a.mc=mcAnim(0);a.mcx=Object.assign(mcAnim(0,1),{cap:['무릎을 반대쪽 팔꿈치로','반대쪽으로 교대']});
   a.march=warmAnim('march');a.catcow=warmAnim('cat');a.circ=warmAnim('circ');a.wgs=warmAnim('wgs');
   a.fold=warmAnim('fold');a.chest=warmAnim('chest');a.child=warmAnim('child');
   a.pu_k=kneePushAnim();a.bro=bagRowAnim();a.rows=rowSteepAnim();a.rdlk=kickRdlAnim();a.slo=sloAnim();
-  a.wall_f=Object.assign(wallAnim(),{props:'',cap:['W 자세','Y 자세로 밀어 올리기']});
+  a.wall_f=Object.assign(wallAnim(),{wall3:0,cap:['W 자세','Y 자세로 밀어 올리기']});
   a.burp_s=Object.assign(burpAnim(),{cap:['서기','웅크려 손 짚기','한 발씩 뒤로 걸어 플랭크','한 발씩 돌아오기']});
   a.chest_f=warmAnim('chest_f');a.wrist=wristAnim();a.tilt=tiltAnim();a.hfx=hipFlexAnim();a.hsb=slideBridgeAnim();a.nord=nordicAnim();
-  a.clam={poses:[{hip:[90,104],t:180,arm:{a:[180,180]},leg:{a:[-35,35]},leg2:{a:[-35,35]},foot:35,foot2:35},{hip:[90,104],t:180,arm:{a:[180,180]},leg:{a:[-65,20]},leg2:{a:[-35,35]},foot:20,foot2:35}],props:'',cap:['무릎 붙이고 준비','위쪽 무릎 열기']};
-  a.slr={poses:[{hip:[90,104],t:180,arm:{a:[180,180]},leg:{a:[0,0]},leg2:{a:[0,0]},foot:0,foot2:0},{hip:[90,104],t:180,arm:{a:[180,180]},leg:{a:[-38,-38]},leg2:{a:[0,0]},foot:-38,foot2:0}],props:'',cap:['다리를 모으고','위쪽 다리를 들어 올리기']};
+  { // 옆으로 누운 동작: 어깨·골반이 위아래로 겹치고(rot·hrot 90), 카메라 쪽 다리가 위
+    const side=(leg,leg2)=>({hip:[86,GY-9],t:-4,hd:0,rot:90,hrot:90,arm:{p3:[[-.7,.55,.4],[-.6,.7,.3]]},arm2:{p3:[[.6,-.2,-.4],[-.2,-.7,-.3]]},leg,leg2,foot:180,foot2:180});
+    const bent=[[-.7,0,.7],[-.75,.05,-.62]];
+    // 클램쉘: 무릎 45도, 발 붙인 채 위쪽 무릎만 천장으로
+    a.clam={yaw:28,poses:[side({p3:bent},{p3:bent}),side({p3:[[-.62,-.6,.5],[-.72,.5,-.48]]},{p3:bent})],props:'',cap:['옆으로 누워 무릎 붙이고 준비','발은 붙인 채 위쪽 무릎 열기']};
+    const st=[[-1,0,.04],[-1,0,.04]];
+    a.slr={yaw:28,poses:[side({p3:st},{p3:st}),side({p3:[[-.8,-.6,.04],[-.8,-.6,.04]]},{p3:st})],props:'',cap:['다리를 모으고','위쪽 다리를 들어 올리기']};
+  }
+  // 사이드 플랭크: 아래팔은 바닥(소품으로 그림), 위팔만 사람 팔로 그린다
+  for(const k of ['sp_k','sp','sp_h'])a[k].oneArm=1;
+  a.sq_s=squatAnim(false,false,true);
+  const KU={leg:{a:[-8,92],z:[0,0]},foot:0};
+  a.jkk={yaw:58,cy:1,poses:[JK(67,JDN,[0,0],[0,0]),JK(68,JUP,[0,0],[-7,-16]),JK(67,JDN,[0,0],[0,0]),JK(67,JMID,[0,0],[0,0],KU)],props:'',dur:2600,cap:['준비','팔 올리며 옆으로 한 발','모으기','무릎 들어 올리기']};
+  a.jkh={yaw:58,cy:1,poses:[JK(67,JDN,[0,0],[0,0]),JK(70,JUP,[6,15],[-6,-15]),JK(67,JDN,[0,0],[0,0]),JK(66,JMID,[0,0],[0,0],KU)],props:'',dur:2000,cap:['준비','점프하며 팔다리 벌리기','모으기','무릎 높이 올리기']};
+  a.cur=Object.assign(lungeAnim('r'),{cap:['서서 준비','한 발을 대각선 뒤로 교차해 내려가기']});
+  a.cur.poses.forEach((p,i)=>{p.leg=Object.assign({},p.leg,{z:[0,0]});p.leg2=Object.assign({},p.leg2,{z:i?[12,19]:[0,0]});}); // 뒷발이 앞발 뒤를 지나 반대편으로
+  // ponytail: '3초·느린' 버전은 같은 동작을 느리게 재생. 내림 3초·올림 1초 비대칭은 아직 없음
+  for(const [k,src] of [['pu_slow','pu'],['pk_slow','pk'],['bro_slow','bro'],['sps_slow','sps'],['cr_slow','cr'],['cr1_slow','cr1'],['hsb_slow','hsb'],['gb1_hold','gb1']])a[k]=Object.assign({},a[src],{dur:4400});
   for(const k in a){if(!a[k].dur)a[k].dur=a[k].hold?3000:2400;}
 })();
 const MOT={push:['pu_in','pu','pu_de'],pushV:['pk_in','pk','pk_de'],tri:['pu_k','pu','pu'],pull:['bro','rows','row'],post:['wall','ytw','ytwh'],
   plank:['plk_k','plk','plk_t'],side:['sp_k','sp','sp_h'],abs:['rcr','slo','lr'],bird:['dead','bird','bear'],squat:['sq_c','sq','sq_t'],lunge:['sps','rl','bul'],
-  hinge:['gm','rdl_s','rdl'],glute:['gb','gb1','ht1'],abd:['clam','slr','rl'],calf:['cr','cr1','cr2'],hiit:['jk_s','jk','burp'],mc:['mc_i','mc','mc'],
+  hinge:['gm','rdl_s','rdl'],glute:['gb','gb1','ht1'],abd:['clam','slr','cur'],calf:['cr','cr1','cr2'],hiit:['jk_s','jkh','burp'],mc:['mc_i','mc','mcx'],
   w1:['march'],w2:['catcow'],w3:['circ'],w4:['wgs'],w5:['wrist'],w6:['wall'],w7:['gb'],w8:['tilt'],c1:['fold'],c2:['chest'],c3:['child'],c4:['hfx'],
   ham:['hsb','hsb','nord']};
 const MUS={push:[['chest','tri'],['shoulder','core']],pushV:[['shoulder','tri'],['chest','core']],tri:[['tri'],['shoulder','chest']],pull:[['back','rear'],['core']],
@@ -710,113 +818,8 @@ function muChips(p,i,act){
   const t=(k,c)=>act?'<button class="tag '+c+'" data-a="muhl" data-k="'+k+'" aria-pressed="false">'+MNAME[k]+'</button>':'<span class="tag '+c+'">'+MNAME[k]+'</span>';
   return m.p.map(k=>t(k,'hot')).join('')+m.s.map(k=>t(k,'hot2')).join('');
 }
-/* ===== 정면(위에서) 보기: 옆면 관절 좌표(높이·앞뒤)에 좌우 폭을 더해 투영해요 =====
-   서 있는 동작은 정면(y=높이), 바닥 동작은 위에서 본 모습(y=몸 길이 방향)으로 보여줘요.
-   pose.Z: 좌우 폭 직접 지정 {e,h,k,a,(e2,h2,k2,a2)} / pose.AT: 위에서 볼 때 팔 각도 [위팔,아래팔] */
-const SW=8,HW=5;
-const TOPIDS=['pu_in','pu','pu_de','pu_k','plk_k','plk','plk_t','sp_k','sp','sp_h','rcr','lr','vup','dead','bird','bear','mc_i','mc','slo',
-  'super','snow','ytw','ytwh','gb','gb1','ht1','hsb','tilt','clam','slr','catcow','child','wrist','row','rows','dip_k','dip'];
-function fjoints(p,mode,dir){
-  const J=fk(p),Z=p.Z||{},top=mode==='t',o={};
-  const Y=q=>top?-q[0]*dir:q[1];
-  const zv=(k,R,def)=>{const v=R?Z[k]:(Z[k+'2']!=null?Z[k+'2']:Z[k]);return v!=null?v:def;};
-  o.sh=[[SW,Y(J.sh)],[-SW,Y(J.sh)]];o.hip=[[HW,Y(J.hip)],[-HW,Y(J.hip)]];o.head=[0,Y(J.head)];
-  o.shm=[0,Y(J.sh)];o.hipm=[0,Y(J.hip)];
-  o.el=[];o.hand=[];o.kn=[];o.an=[];o.toe=[];
-  [1,-1].forEach((s,i)=>{
-    const R=s>0,el=R?J.el:(J.el2||J.el),ha=R?J.hand:(J.hand2||J.hand),kn=R?J.kn:(J.kn2||J.kn),an=R?J.an:(J.an2||J.an),to=R?J.toe:(J.toe2||J.toe);
-    const AT=(R?p.AT:(p.AT2||p.AT));
-    if(top&&AT){
-      const a=AT[0]*Math.PI/180,b=AT[1]*Math.PI/180,sy=o.sh[i][1];
-      const ex=SW+16*Math.cos(a),ey=sy-16*Math.sin(a);
-      o.el[i]=[s*ex,ey];o.hand[i]=[s*(ex+15*Math.cos(b)),ey-15*Math.sin(b)];
-    }else{
-      o.el[i]=[s*zv('e',R,SW+2),Y(el)];o.hand[i]=[s*zv('h',R,SW+1),Y(ha)];
-    }
-    o.kn[i]=[s*zv('k',R,HW+2),Y(kn)];o.an[i]=[s*zv('a',R,HW+3),Y(an)];
-    o.toe[i]=top?[s*zv('a',R,HW+3),Y(to)]:[s*(zv('a',R,HW+3)+4),Y(to)+1];
-  });
-  return o;
-}
-function fpts(F){const a=[F.head,F.shm,F.hipm];['sh','hip','el','hand','kn','an','toe'].forEach(k=>F[k].forEach(q=>a.push(q)));return a;}
-function fitF(an){
-  const top=an.fv==='t';let mnx=1e9,mxx=-1e9,mny=1e9,mxy=-1e9;
-  for(let i=0;i<24;i++){fpts(fjoints(poseAt(an,i/24),an.fv,an.dir)).forEach(q=>{mnx=Math.min(mnx,q[0]);mxx=Math.max(mxx,q[0]);mny=Math.min(mny,q[1]);mxy=Math.max(mxy,q[1]);});}
-  const w=mxx-mnx+16,h=mxy-mny+16;
-  if(top)return {s:Math.min(1.9,176/w,104/h),cx:(mnx+mxx)/2,cy:(mny+mxy)/2};
-  return {s:Math.min(1.6,176/w,(GY-6)/(GY-mny+8)),cx:(mnx+mxx)/2,cy:GY};
-}
-const fln=(a,b,w,op,c)=>'<line x1="'+a[0].toFixed(1)+'" y1="'+a[1].toFixed(1)+'" x2="'+b[0].toFixed(1)+'" y2="'+b[1].toFixed(1)+'" stroke="'+(c||'var(--ink)')+'" stroke-width="'+w+'" stroke-linecap="round" opacity="'+op+'"/>';
-const fdot=(c,r,op)=>'<circle cx="'+c[0].toFixed(1)+'" cy="'+c[1].toFixed(1)+'" r="'+r+'" fill="var(--hot)" opacity="'+op+'"/>';
-const mid=(a,b,t)=>[a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t];
-function fbody(F,op,top){
-  let s='';
-  if(top){s+=fln(F.shm,F.hipm,20,.1*op,'var(--ink)');for(let i=0;i<2;i++){s+=fln(F.hip[i],F.an[i],7,.07*op,'var(--ink)');}}
-  s+=fln(F.sh[0],F.sh[1],5,op)+fln(F.hip[0],F.hip[1],5,op)+fln(F.shm,F.hipm,4.2,op);
-  for(let i=0;i<2;i++){
-    s+=fln(F.sh[i],F.el[i],3.8,op)+fln(F.el[i],F.hand[i],3.8,op);
-    s+=fln(F.hip[i],F.kn[i],4.2,op)+fln(F.kn[i],F.an[i],4.2,op)+fln(F.an[i],F.toe[i],3.4,op);
-  }
-  if(top)for(let i=0;i<2;i++){s+='<circle cx="'+F.hand[i][0].toFixed(1)+'" cy="'+F.hand[i][1].toFixed(1)+'" r="2.6" fill="var(--ink)" opacity="'+op+'"/>';}
-  return s+'<circle cx="'+F.head[0].toFixed(1)+'" cy="'+F.head[1].toFixed(1)+'" r="'+LEN.hd+'" fill="var(--surface)" stroke="var(--ink)" stroke-width="3" opacity="'+op+'"/>';
-}
-function fmuscle(m,F,op){
-  const H='var(--hot)',b=(a,c,w,o)=>fln(a,c,w,o,H);let s='';
-  const both=(f)=>{for(let i=0;i<2;i++)s+=f(i);};
-  switch(m){
-    case 'chest':s+=b(mid(F.sh[0],F.hipm,.2),mid(F.sh[1],F.hipm,.2),12,op);break;
-    case 'back':s+=b(F.shm,F.hipm,13,op)+b(mid(F.sh[0],F.hipm,.25),mid(F.sh[1],F.hipm,.25),9,op*.8);break;
-    case 'rear':s+=b(F.sh[0],F.sh[1],9,op)+b(F.sh[0],F.sh[1],0.1,0);break;
-    case 'shoulder':both(i=>fdot(F.sh[i],7,op));break;
-    case 'tri':both(i=>b(F.sh[i],F.el[i],7,op));break;
-    case 'core':s+=b(mid(F.shm,F.hipm,.3),mid(F.shm,F.hipm,.95),11,op);break;
-    case 'obl':both(i=>b(mid(F.sh[i],F.hip[i],.15),mid(F.sh[i],F.hip[i],.85),6,op));break;
-    case 'glute':both(i=>fdot(F.hip[i],6.5,op));break;
-    case 'abd':both(i=>fdot([F.hip[i][0]*1.9,F.hip[i][1]],5,op));break;
-    case 'quad':case 'ham':both(i=>b(F.hip[i],F.kn[i],8,op));break;
-    case 'calf':both(i=>b(F.kn[i],F.an[i],7,op));break;
-    case 'cardio':s+=b(F.shm,F.hipm,12,op*.6)+fdot(F.shm,6,op);both(i=>b(F.hip[i],F.kn[i],7,op*.45)+b(F.kn[i],F.an[i],6,op*.45));break;
-  }
-  return s;
-}
-function trailF(an,mode){
-  const pts=[[],[]];
-  for(let i=0;i<=40;i++){const F=fjoints(poseAt(an,i/40),mode,an.dir);pts[0].push(F.hand[0]);pts[1].push(F.hand[1]);}
-  return pts.map(a=>'<polyline points="'+a.map(q=>q[0].toFixed(1)+','+q[1].toFixed(1)).join(' ')+'" fill="none" stroke="var(--muted)" stroke-width="1.4" stroke-dasharray="3 3" opacity=".75"/>').join('');
-}
-function trailS(an){
-  const a=[];for(let i=0;i<=40;i++){a.push(fk(poseAt(an,i/40)).hand);}
-  return '<polyline points="'+a.map(q=>q[0].toFixed(1)+','+q[1].toFixed(1)).join(' ')+'" fill="none" stroke="var(--muted)" stroke-width="1.4" stroke-dasharray="3 3" opacity=".75"/>';
-}
-function fframe(M,pulse){
-  const a=M.an,F=fjoints(poseAt(a,M.ph),a.fv,a.dir),G=fjoints(a.poses[0],a.fv,a.dir);
-  let m='';
-  M.mu.p.forEach(k=>{m+=fmuscle(k,F,.55+.3*pulse);});
-  M.mu.s.forEach(k=>{m+=fmuscle(k,F,.25+.12*pulse);});
-  const f=M.fitF,top=a.fv==='t';
-  return '<g transform="translate(100 '+(top?60:GY)+') scale('+f.s.toFixed(3)+') translate('+(-f.cx).toFixed(1)+' '+(-f.cy).toFixed(1)+')">'+(a.trail?trailF(a,a.fv):'')+fbody(G,.14,top)+m+fbody(F,.95,top)+'</g>';
-}
-/* 모든 동작에 보기 방식 지정 */
-(function(){
-  for(const id in ANIM){
-    const a=ANIM[id];if(a.front)continue;
-    a.fv=TOPIDS.indexOf(id)>=0?'t':'f';
-    const p0=a.poses[0],J=fk(p0);a.dir=(J.head[0]-J.an[0])>=0?1:-1;
-    a.fl=a.fv==='t'?'위에서':'정면';
-  }
-})();
-
-/* 동작별 좌우 폭 보정 */
-(function(){
-  const A=ANIM,setZ=(id,zs,ats)=>{const a=A[id];if(!a)return;a.poses.forEach((p,i)=>{if(zs&&zs[i])p.Z=zs[i];if(ats&&ats[i])p.AT=ats[i];});};
-  ['pu_in','pu','pu_de','pu_k'].forEach(id=>setZ(id,[{e:10,h:9},{e:18,h:9}]));
-  ['plk','plk_k','plk_t'].forEach(id=>setZ(id,[{e:9,h:9},{e:9,h:9}]));
-  setZ('super',null,[[85,85],[85,85]]);
-  setZ('snow',null,[[-80,-80],[80,80]]);
-  setZ('wall',[{e:15,h:15},{e:12,h:17}]);setZ('wall_f',[{e:15,h:15},{e:12,h:17}]);
-  setZ('clam',[{k:3,k2:-3,a:3,a2:-3},{k:3,k2:15,a:3,a2:-3}]);
-  setZ('slr',[{k:3,k2:-3,a:3,a2:-3},{k:3,k2:-3,a:3,a2:-3}]);
-})();
+/* 팝업 보조 보기: 바닥 동작은 위에서, 서 있는 동작은 정면 */
+(function(){for(const id in ANIM){const a=ANIM[id],J=fk(a.poses[0]);a.low=J.sh[1]>GY-34;a.fl=a.low?'위에서':'정면';}})();
 /* ===== 집 환경(도구) 설정과 도구 없는 대체 동작 ===== */
 const EQ=[['chair','의자·소파'],['table','튼튼한 식탁'],['wall','벽·문틀'],['step','계단·낮은 단'],['jump','점프 가능 (충격·소음)']];
 const EQN={};EQ.forEach(e=>{EQN[e[0]]=e[1];});
@@ -831,22 +834,22 @@ const TOOLNOTE={
    필요 도구: a|b = 둘 중 하나, a&b = 모두 */
 const ALT={
   'push:0':['chair','무릎 푸시업','무릎을 바닥에, 머리부터 무릎까지 일직선|가슴이 바닥 가까이 내려가기|팔꿈치는 몸통에서 45도','엉덩이가 뒤로 빠지는 것','pu_k'],
-  'push:2':['chair','느린 푸시업 (3초 내리기)','손은 어깨 바로 아래, 배와 엉덩이에 힘 유지|3초 동안 천천히 내려가기|내려가며 들이마시고 밀어 올리며 내쉬기','목을 앞으로 빼는 것','pu'],
+  'push:2':['chair','느린 푸시업 (3초 내리기)','손은 어깨 바로 아래, 배와 엉덩이에 힘 유지|3초 동안 천천히 내려가기|내려가며 들이마시고 밀어 올리며 내쉬기','목을 앞으로 빼는 것','pu_slow'],
   'pushV:0':['chair','무릎 굽힌 파이크 푸시업','바닥에 손을 짚고 엉덩이를 높이, 무릎은 굽혀도 됨|이마를 손 사이 공간으로 내리기|목은 길게, 어깨가 귀로 올라가지 않게','허리가 꺾이는 것','pk'],
-  'pushV:2':['chair','3초 파이크 푸시업','엉덩이를 높여 역 V자 만들기|3초 내리고 올라오기|어깨 라인에 부하 집중, 목은 길게','목에 힘이 들어가는 것','pk'],
+  'pushV:2':['chair','3초 파이크 푸시업','엉덩이를 높여 역 V자 만들기|3초 내리고 올라오기|어깨 라인에 부하 집중, 목은 길게','목에 힘이 들어가는 것','pk_slow'],
   'pull:1':['table','배낭 로우 (무겁게, 1초 멈춤)','책을 더 넣은 배낭(5kg 안팎)을 양손으로 잡고 엉덩이를 뒤로 빼 숙이기|팔꿈치를 뒤 주머니 쪽으로 당기며 1초 멈추기|내릴 때 2초, 등은 곧게','등이 둥글게 말리는 것','bro'],
-  'pull:2':['table','3초 배낭 로우 (무겁게)','배낭(5~8kg)을 양손으로 잡고 엉덩이를 뒤로 빼 숙이기|팔꿈치를 당기며 날개뼈를 아래로|내릴 때 3초, 등은 곧게','등이 둥글게 말리는 것','bro'],
+  'pull:2':['table','3초 배낭 로우 (무겁게)','배낭(5~8kg)을 양손으로 잡고 엉덩이를 뒤로 빼 숙이기|팔꿈치를 당기며 날개뼈를 아래로|내릴 때 3초, 등은 곧게','등이 둥글게 말리는 것','bro_slow'],
   'post:0':['wall','서서 W→Y 슬라이드 (벽 없이)','서서 갈비뼈는 닫고 팔을 W 모양으로|손등이 뒤로 빠지지 않게 천천히 Y로 올리기|허리가 꺾이지 않게','허리가 꺾이는 것','wall_f'],
-  'squat:0':['chair','얕은 스쿼트','엉덩이를 뒤로 빼며 허벅지가 45도쯤 될 때까지만|발은 어깨너비, 무릎은 발끝 방향|일어날 때 엉덩이를 조이기','무릎이 안쪽으로 모이는 것','sq'],
-  'lunge:2':['chair','3초 스플릿 스쿼트','다리를 앞뒤로 벌리고 3초 동안 내려가기|앞 무릎이 안쪽으로 무너지지 않게|좌우 각각 진행','앞발 뒤꿈치가 뜨는 것','sps'],
+  'squat:0':['chair','얕은 스쿼트','엉덩이를 뒤로 빼며 허벅지가 45도쯤 될 때까지만|발은 어깨너비, 무릎은 발끝 방향|일어날 때 엉덩이를 조이기','무릎이 안쪽으로 모이는 것','sq_s'],
+  'lunge:2':['chair','3초 스플릿 스쿼트','다리를 앞뒤로 벌리고 3초 동안 내려가기|앞 무릎이 안쪽으로 무너지지 않게|좌우 각각 진행','앞발 뒤꿈치가 뜨는 것','sps_slow'],
   'mc:0':['chair','느린 마운틴 클라이머 (바닥)','플랭크 자세에서 무릎을 천천히 번갈아 당기기|엉덩이가 올라가지 않게|힘들면 무릎을 바닥에 내려 쉬기','손목이 아프면 팔꿈치로','mc'],
   'hinge:1':['chair|wall','킥스탠드 RDL','한 발을 뒤에 가볍게 두고 앞발에 체중 80퍼센트|엉덩이를 뒤로 보내며 숙이기, 무릎은 살짝 굽힌 채|좌우 각각 진행','등이 둥글게 말리는 것','rdlk'],
-  'glute:2':['chair','싱글 레그 브릿지 3초 홀드','한 다리를 펴고 반대 다리로 엉덩이 들기|꼭대기에서 3초 조이기|골반 수평 유지, 좌우 각각','허리가 꺾이는 것','gb1'],
-  'calf:1':['wall','양발 카프 레이즈 (3초 내리기)','발 간격은 주먹 하나, 뒤꿈치를 높이 들기|올릴 때 1초, 내릴 때 3초|몸이 흔들리면 발 간격을 넓히기','반동으로 올리는 것','cr'],
-  'calf:2':['step&wall','한 발 카프 레이즈 (3초 내리기)','바닥에서 한 발로 올리고 내릴 때 3초|균형이 어려우면 손끝만 가볍게 짚기|좌우 같은 횟수','발목이 바깥으로 꺾이는 것','cr1'],
-  'hiit:1':['jump','스텝 잭 + 니업','스텝 잭과 제자리 니업을 번갈아|점프 없이 한 발씩 리듬 있게|숨이 차도 대화가 되는 강도','발소리를 쿵쿵 내는 것','jk_s'],
+  'glute:2':['chair','싱글 레그 브릿지 3초 홀드','한 다리를 펴고 반대 다리로 엉덩이 들기|꼭대기에서 3초 조이기|골반 수평 유지, 좌우 각각','허리가 꺾이는 것','gb1_hold'],
+  'calf:1':['wall','양발 카프 레이즈 (3초 내리기)','발 간격은 주먹 하나, 뒤꿈치를 높이 들기|올릴 때 1초, 내릴 때 3초|몸이 흔들리면 발 간격을 넓히기','반동으로 올리는 것','cr_slow'],
+  'calf:2':['step&wall','한 발 카프 레이즈 (3초 내리기)','바닥에서 한 발로 올리고 내릴 때 3초|균형이 어려우면 손끝만 가볍게 짚기|좌우 같은 횟수','발목이 바깥으로 꺾이는 것','cr1_slow'],
+  'hiit:1':['jump','스텝 잭 + 니업','스텝 잭과 제자리 니업을 번갈아|점프 없이 한 발씩 리듬 있게|숨이 차도 대화가 되는 강도','발소리를 쿵쿵 내는 것','jkk'],
   'hiit:2':['jump','노점프 버피','내려가 손 짚고 한 발씩 뒤로 걸어 플랭크|한 발씩 돌아와 일어나기, 점프 없이|푸시업은 생략해도 됨','허리가 꺼지는 것','burp_s'],
-  'ham:2':['chair','슬라이딩 레그 컬 (3초)','양말이나 수건으로 발을 미끄러뜨리며 엉덩이를 든 채 다리 펴기|발을 당겨 올 때 3초|엉덩이는 계속 높게','허리가 꺾이는 것','hsb'],
+  'ham:2':['chair','슬라이딩 레그 컬 (3초)','양말이나 수건으로 발을 미끄러뜨리며 엉덩이를 든 채 다리 펴기|발을 당겨 올 때 3초|엉덩이는 계속 높게','허리가 꺾이는 것','hsb_slow'],
   'w6:0':['wall','서서 W→Y 슬라이드 (벽 없이)','서서 갈비뼈는 닫고 팔을 W 모양으로|손등이 뒤로 빠지지 않게 천천히 Y로|허리가 꺾이지 않게','허리가 꺾이는 것','wall_f'],
   'c2:0':['wall','깍지 낀 가슴 열기','서서 양손을 등 뒤에서 깍지 끼기|가슴을 열고 어깨를 아래로|팔을 살짝 들어 올리며 호흡하기','허리를 꺾는 것','chest_f']
 };
@@ -906,33 +909,27 @@ function confirmPop(k,act){
 
 /* 움직임 팝업 */
 let MO=null,MVIEW='s',MVTOUCH=false;
-function fitOf(an){
-  if(an.front)return {s:1,cx:100};
-  let mn=1e9,mx=-1e9,my=1e9;
-  for(let i=0;i<16;i++){const J=fk(poseAt(an,i/16));for(const k in J){const q=J[k];if(Array.isArray(q)){mn=Math.min(mn,q[0]);mx=Math.max(mx,q[0]);my=Math.min(my,q[1]);}}}
-  return {s:Math.min(1.6,168/(mx-mn+14),(GY-6)/(GY-my+8)),cx:(mn+mx)/2};
+function fitOf(an,view){
+  cam(an,view);let mn=1e9,mx=-1e9,my=1e9,My=-1e9,wmn=1e9,wmx=-1e9;
+  for(let i=0;i<16;i++){const W=fig3(poseAt(an,i/16));for(const k of PTS){const q=fpj(W[k]);wmn=Math.min(wmn,W[k][0]);wmx=Math.max(wmx,W[k][0]);mn=Math.min(mn,q[0]);mx=Math.max(mx,q[0]);my=Math.min(my,q[1]);My=Math.max(My,q[1]);}}
+  return {s:Math.min(1.6,168/(mx-mn+20),100/(My-my+18)),cx:(mn+mx)/2,cy:(my+My)/2,wmn,wmx};
 }
 function frameSvg(M,pulse){
-  const a=M.an;
-  if(a.front)return frontSvg(poseAt(a,M.ph),M.mu,pulse);
-  if(M.view==='f')return fframe(M,pulse);
-  const J=fk(poseAt(a,M.ph)),G0=fk(a.poses[0]);
-  let m='';
-  M.mu.p.forEach(k=>{m+=muscleSvg(k,J,.55+.3*pulse);});
-  M.mu.s.forEach(k=>{m+=muscleSvg(k,J,.25+.12*pulse);});
-  return '<g transform="translate(100 '+GY+') scale('+M.fit.s.toFixed(3)+') translate('+(-M.fit.cx).toFixed(1)+' '+(-GY)+')">'+a.props+(a.trail?trailS(a):'')+bodySvg(G0,.14)+m+bodySvg(J,.95)+'</g>';
+  const a=M.an,v=M.view==='f'?'f':'s';cam(a,v);
+  const f=v==='f'?M.fitF:M.fit,gk='__g'+FIG.k,W=fig3(poseAt(a,M.ph)),G0=a[gk]||(a[gk]=figSvg(fig3(a.poses[0]),null,0,a.oneArm,1));
+  return '<g transform="translate(100 60) scale('+f.s.toFixed(3)+') translate('+(-f.cx).toFixed(1)+' '+(-f.cy).toFixed(1)+')">'+(M.floor?matSvg(f):'')+(a.wall3?wallSvg(a.wall3):'')+'<g transform="'+FIG.mx+'">'+a.props+'</g>'+(a.trail?trailS(a):'')+'<g opacity=".14">'+G0+'</g>'+figSvg(W,M.mu,pulse,a.oneArm)+'</g>';
 }
 function openMotion(p,i,force){
   const ex=lvOf(p,i,force),an=animFor(p,i,force),note=force==='1'||force===1?'':toolNote(p,i,force==='b');
   if(!an)return;
   openPop('<div class="row sb"><h2>'+esc(ex.n)+'</h2><button class="btn sm ghost" data-a="popclose2">닫기</button></div>'+
-    '<button class="mo" data-a="motog" aria-label="동작 애니메이션, 누르면 재생 또는 일시정지"><svg viewBox="0 0 200 120" width="100%" role="img" aria-label="'+esc(ex.n)+' 동작 애니메이션"><line id="mogl" x1="8" x2="192" y1="109" y2="109" stroke="var(--line)" stroke-width="2"/><g id="mog"></g></svg></button>'+
-    (an.front?'<p class="muted" style="font-size:12px">정면에서 본 동작이에요. 옆에서 보면 팔다리가 몸에 겹쳐서 정면만 보여드려요.</p>':'<div class="seg" role="group" aria-label="보는 방향"><button data-a="mov" data-v="s" aria-pressed="'+(MVIEW==='s')+'">옆면</button><button data-a="mov" data-v="f" aria-pressed="'+(MVIEW==='f')+'">'+an.fl+'</button></div><p class="muted" style="font-size:12px;min-height:36px" id="movn"></p>')+
+    '<button class="mo" data-a="motog" aria-label="동작 애니메이션, 누르면 재생 또는 일시정지"><svg viewBox="0 0 200 120" width="100%" role="img" aria-label="'+esc(ex.n)+' 동작 애니메이션"><g id="mog"></g></svg></button>'+
+    '<div class="seg" role="group" aria-label="보는 방향"><button data-a="mov" data-v="s" aria-pressed="'+(MVIEW==='s')+'">사선</button><button data-a="mov" data-v="f" aria-pressed="'+(MVIEW==='f')+'">'+an.fl+'</button></div><p class="muted" style="font-size:12px;min-height:36px" id="movn"></p>'+
     '<div class="row sb"><span class="tag" id="mocap"></span><span class="muted" style="font-size:12px" id="mopl">화면을 누르면 멈춰요</span></div>'+
-    '<div><p class="eyebrow" style="margin-bottom:6px">자극 부위 · 진한 색은 주 자극, 연한 색은 보조'+(an.front?'':' · 이름을 누르면 그 부위만 보여요')+'</p><div class="chips" style="gap:6px">'+muChips(p,i,an.front?0:1)+'</div></div>'+
+    '<div><p class="eyebrow" style="margin-bottom:6px">자극 부위 · 진한 색은 주 자극, 연한 색은 보조 · 이름을 누르면 그 부위만 보여요</p><div class="chips" style="gap:6px">'+muChips(p,i,1)+'</div></div>'+
     '<ul class="cues">'+ex.c.map(c=>'<li>'+esc(c)+'</li>').join('')+'</ul>'+(ex.x?'<p class="muted" style="font-size:13px">자주 하는 실수 · '+esc(ex.x)+'</p>':'')+(ex.alt?'<p class="muted" style="font-size:12px">도구가 없을 때 하는 동작이에요</p>':'')+(note?'<p class="muted" style="font-size:12px">안전 · '+esc(note)+'</p>':''));
   const reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
-  MO={an,mu:musFor(p,i),mu0:null,hl:'',fit:fitOf(an),fitF:an.front?null:fitF(an),view:an.front?'f':(an.pv&&!MVTOUCH?'f':MVIEW),t0:performance.now(),ph:reduce?.5:0,paused:!!reduce,raf:0,cap:''};
+  MO={an,mu:musFor(p,i),mu0:null,hl:'',fit:fitOf(an),floor:1,fitF:fitOf(an,'f'),view:an.pv&&!MVTOUCH?'f':MVIEW,t0:performance.now(),ph:reduce?.5:0,paused:!!reduce,raf:0,cap:''};
   if(reduce)$('#mopl').textContent='화면을 누르면 재생돼요';
   setMoView(MO.view,1);
   motionLoop();
@@ -945,11 +942,10 @@ function muHl(k){
   document.querySelectorAll('[data-a="muhl"]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.k===MO.hl)));
 }
 function setMoView(v,keep){
-  if(!MO||MO.an.front)return;
+  if(!MO)return;
   MO.view=v;if(!keep){MVIEW=v;MVTOUCH=true;}
   document.querySelectorAll('[data-a="mov"]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.v===v)));
-  const l=$('#mogl');if(l)l.style.display=(v==='f'&&MO.an.fv==='t')?'none':'';
-  const n=$('#movn');if(n)n.textContent=v==='f'?(MO.an.fv==='t'?'위에서 내려다본 모습이에요. 머리가 위쪽이에요.':'몸 앞쪽에서 본 모습이에요.')+(MO.an.trail?' 점선은 손이 지나가는 길이에요.':''):(MO.an.pv?'이 동작은 팔이 몸 옆으로 움직여서 옆에서는 짧게 보여요. 정면 보기가 더 정확해요.':'');
+  const n=$('#movn');if(n)n.textContent=v==='f'?(MO.an.low?'위에서 내려다본 모습이에요.':'몸 앞쪽에서 본 모습이에요.')+(MO.an.trail?' 점선은 손이 지나가는 길이에요.':''):(MO.an.pv?'팔이 몸 옆으로 움직이는 동작이라 '+MO.an.fl+' 보기가 더 정확해요.':'');
 }
 function motionLoop(){
   if(!MO)return;
@@ -1327,11 +1323,12 @@ let PF=0;
 function plFig(now){
   const v=document.getElementById('plfig');
   if(!v){PF=0;return;}
-  if(!v.__m){const an=animFor(v.dataset.p,+v.dataset.i);v.__m={an,mu:{p:[],s:[]},fit:fitOf(an),view:'s',ph:.5};
-    const g=v.firstChild,bx=[];for(let k=0;k<12;k++){v.__m.ph=k/12;g.innerHTML=frameSvg(v.__m,.5);bx.push(g.getBBox());}fitBox(v,bx);}
+  if(!v.__m){const an=animFor(v.dataset.p,+v.dataset.i);v.__m={an,mu:musFor(v.dataset.p,+v.dataset.i),fit:fitOf(an),view:'s',ph:.5,floor:1};
+    const g=v.firstChild,bx=[];for(let k=0;k<12;k++){v.__m.ph=k/12;g.innerHTML=frameSvg(v.__m,.5);bx.push(g.getBBox());}fitBox(v,bx);
+    const b=v.viewBox.baseVal;v.__floor='';void '<line x1="'+b.x+'" x2="'+(b.x+b.width)+'" y1="'+(GY+2.5)+'" y2="'+(GY+2.5)+'" stroke="var(--line)" stroke-width="'+(b.width/110).toFixed(2)+'" stroke-linecap="round"/>';}
   const M=v.__m,still=matchMedia('(prefers-reduced-motion: reduce)').matches;
   M.ph=still?.5:(now%M.an.dur)/M.an.dur;
-  v.firstChild.innerHTML=frameSvg(M,.5);
+  v.firstChild.innerHTML=v.__floor+frameSvg(M,.5);
   PF=still?0:requestAnimationFrame(plFig);
 }
 
@@ -1598,17 +1595,37 @@ render();
   const el=$('#splash'),grid=$('#sp-grid'),cap=$('#sp-cap');
   const intro=()=>{if(!S.seen){S.seen=true;save();infoPop('intro');}};
   // ponytail: 동작 12개 고정. 칸 수를 바꾸려면 이 목록과 grid 열 수만 바꾸면 된다
-  const SP=[['sq','스쿼트'],['pu','푸시업'],['plk','플랭크'],['gb','글루트 브릿지'],['rl','리버스 런지'],['pk','파이크 푸시업'],
-    ['bird','버드독'],['mc','마운틴 클라이머'],['sp','사이드 플랭크'],['jk','점핑잭'],['super','슈퍼맨'],['cr','카프 레이즈']].filter(x=>ANIM[x[0]]);
+  // 로고와 같은 픽토그램: 굵기 같은 둥근 획 + 떨어진 머리 점. 100×100 타일, 바닥 y=86, 오른쪽을 본다
+  // 각 동작은 [h:머리, b:획들] 두 장면을 오가고, 두 장면의 획 수·점 수는 같아야 한다
+  const K=(h,...b)=>({h,b});
+  const SP=[
+    ['스쿼트',K([50,13],[[50,26],[50,52]],[[50,30],[70,30]],[[50,52],[50,68],[50,84]]),K([58,25],[[51,37],[38,60]],[[51,40],[72,40]],[[38,60],[58,62],[52,84]])],
+    ['푸시업',K([82,45],[[40,68],[70,54]],[[70,54],[71,69],[72,84]],[[40,68],[12,82]]),K([84,70],[[40,79],[71,74]],[[71,74],[62,68],[72,84]],[[40,79],[12,84]])],
+    ['플랭크',K([81,56],[[42,72],[70,63]],[[70,63],[70,84],[84,84]],[[42,72],[12,84]]),K([81,55],[[42,71],[70,62]],[[70,62],[70,84],[84,84]],[[42,71],[12,84]])],
+    ['글루트 브릿지',K([12,78],[[25,80],[52,80]],[[27,84],[46,84]],[[52,80],[66,62],[74,84]]),K([12,76],[[25,79],[54,64]],[[27,84],[46,84]],[[54,64],[70,58],[74,84]])],
+    ['리버스 런지',K([50,13],[[50,26],[50,52]],[[50,30],[53,50]],[[50,52],[50,68],[50,84]],[[50,52],[50,68],[50,84]]),K([49,22],[[49,35],[48,60]],[[49,39],[52,58]],[[48,60],[64,63],[62,84]],[[48,60],[36,80],[20,84]])],
+    ['파이크 푸시업',K([76,66],[[48,40],[64,60]],[[64,60],[68,72],[72,84]],[[48,40],[22,84]]),K([79,77],[[48,44],[68,70]],[[68,70],[62,64],[74,84]],[[48,44],[22,84]])],
+    ['버드독',K([82,54],[[36,62],[70,60]],[[70,60],[70,84]],[[70,60],[70,84]],[[36,62],[36,84],[16,84]],[[36,62],[36,84],[16,84]]),K([82,52],[[36,62],[70,60]],[[70,60],[70,84]],[[70,60],[94,54]],[[36,62],[36,84],[16,84]],[[36,62],[22,61],[6,60]])],
+    ['마운틴 클라이머',K([80,47],[[40,66],[70,54]],[[70,54],[72,84]],[[40,66],[26,74],[12,82]],[[40,66],[58,72],[44,84]]),K([80,47],[[40,66],[70,54]],[[70,54],[72,84]],[[40,66],[58,72],[44,84]],[[40,66],[26,74],[12,82]])],
+    ['사이드 플랭크',K([82,57],[[42,74],[70,62]],[[70,62],[70,84],[82,84]],[[70,62],[70,36]],[[42,74],[12,84]]),K([82,55],[[42,70],[70,60]],[[70,60],[70,84],[82,84]],[[70,60],[70,34]],[[42,70],[12,84]])],
+    ['점핑잭',K([50,13],[[50,26],[50,52]],[[50,30],[44,50]],[[50,30],[56,50]],[[50,52],[46,84]],[[50,52],[54,84]]),K([50,13],[[50,26],[50,52]],[[50,30],[32,12]],[[50,30],[68,12]],[[50,52],[34,84]],[[50,52],[66,84]])],
+    ['슈퍼맨',K([82,79],[[42,82],[71,82]],[[71,82],[94,82]],[[42,82],[12,82]]),K([80,67],[[42,82],[69,72]],[[69,72],[92,62]],[[42,82],[12,73]])],
+    ['카프 레이즈',K([50,13],[[50,26],[50,54]],[[50,30],[53,52]],[[50,54],[50,78],[60,84]]),K([50,6],[[50,19],[50,47]],[[50,23],[53,45]],[[50,47],[51,72],[60,84]])]
+  ];
+  const ez=u=>.5-.5*Math.cos(Math.PI*u),mixP=(a,b,t)=>[a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t];
+  const pic=(m,t)=>{const A=m[1],B=m[2],h=mixP(A.h,B.h,t);
+    return '<rect class="pt" x="2" y="2" width="96" height="96" rx="22"/><g class="pf" fill="none" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">'+
+      A.b.map((l,i)=>'<polyline points="'+l.map((p,j)=>mixP(p,B.b[i][j],t).map(v=>v.toFixed(1)).join(',')).join(' ')+'"/>').join('')+
+      '</g><circle class="pf" cx="'+h[0].toFixed(1)+'" cy="'+h[1].toFixed(1)+'" r="6.5"/>';};
   const reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const M=SP.map(([k],i)=>({an:ANIM[k],mu:{p:[],s:[]},fit:fitOf(ANIM[k]),view:'s',off:i*.37}));
-  grid.innerHTML=SP.map(()=>'<svg viewBox="0 0 200 120" preserveAspectRatio="xMidYMid meet"><g></g></svg>').join('');
+  const M=SP.map((m,i)=>({m,dur:1800+(i%3)*300,off:i*.37}));
+  grid.innerHTML=SP.map(()=>'<svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet"><g></g></svg>').join('');
   const svgs=[...grid.children],gs=svgs.map(v=>v.firstChild);
   let raf=0,shown=0,t0=performance.now(),ci=-1;
   function loop(now){
-    M.forEach((m,i)=>{if(i>=shown)return;m.ph=reduce?.5:(((now-t0)/m.an.dur)+m.off)%1;gs[i].innerHTML=frameSvg(m,.5);});
+    M.forEach((o,i)=>{if(i>=shown)return;const u=reduce?1:(((now-t0)/o.dur)+o.off)%1;gs[i].innerHTML=pic(o.m,reduce?1:ez(u<.5?u*2:2-u*2));});
     const c=Math.floor((now-t0)/2400)%SP.length;
-    if(c!==ci){ci=c;cap.textContent=SP[c][1];svgs.forEach((v,i)=>v.style.opacity=i===c?'1':'');}
+    if(c!==ci){ci=c;cap.textContent=SP[c][0];svgs.forEach((v,i)=>v.classList.toggle('cur',i===c));}
     if(!reduce)raf=requestAnimationFrame(loop);
   }
   // 로딩: 칸이 하나씩 나타난다
